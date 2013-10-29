@@ -129,7 +129,7 @@ Ou atraves do helper
 pg.add_item(id="0003", description="produto 4", amount=320, quantity=1, weight=2500)
 ```
 
-### Congigurando a URL de redirect
+### Configurando a URL de redirect
 
 Para onde o comprador será redirecionado após completar o pagamento
 
