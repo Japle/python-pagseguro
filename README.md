@@ -162,6 +162,42 @@ Utilize a **redirect_url** para enviar o comprador para a página de pagamento d
 
 Após o pagamento o comprador será redirecionado de volta para os eu site através da configuração de url de retorno global ou utilizará a url especificada no parametro **redirect_url**
 
+
+# Notificações
+
+O PagSeguro envia as notificações para a URL que você configurou usando o protocolo HTTP, pelo método POST.
+
+Suponde que você receberá a notificação em: http://seusite.com/notification
+
+> Pseudo codigo
+
+```python
+from pagseguro import PagSeguro
+
+def notification_view(request):
+    notification_code = request.POST['notificationCode']
+    pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO")
+    notification_data = pg.check_notification(notification_code)
+    ...
+```
+
+No exemplo acima pegamos o **notificationCode** que foi enviado através do pagseguro e fizemos uma consulta para pegar os dados da notificação, o retorno será em um dicionário Python com o seguinte formato:
+
+```python
+{
+    "date": datetime(2013, 01, 01, 18, 23, 0000),
+    "code": "XDFD454545",
+    "reference": "REF00123456789",
+    "type": 1,
+    "status": 3,
+    "cancellationSource": "INTERNAL",
+    ...
+}
+```
+
+A lista completa de valores pode ser conferida em  https://pagseguro.uol.com.br/v2/guia-de-integracao/api-de-notificacoes.html
+
+
 # Implementações
 
 ## Exemplo em Django
