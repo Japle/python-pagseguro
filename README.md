@@ -161,3 +161,11 @@ O método checkout faz a requisição ao pagseguro e retorna o código da transa
 Utilize a **redirect_url** para enviar o comprador para a página de pagamento do pagseguro.
 
 Após o pagamento o comprador será redirecionado de volta para os eu site através da configuração de url de retorno global ou utilizará a url especificada no parametro **redirect_url**
+
+# Implementações
+
+## Exemplo em Django
+
+## Exemplo em Flask
+
+## Exemplo em web2py
