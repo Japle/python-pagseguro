@@ -138,7 +138,8 @@ pg.redirect_url = "http://meusite.com/obrigado"
 ```
 
 ### Configurando a URL de notificaçao (opcional)
-```
+
+```python
 pg.notification_url = "http://meusite.com/notification"
 ```
 
@@ -198,6 +199,8 @@ A lista completa de valores pode ser conferida em  https://pagseguro.uol.com.br/
 
 
 # Implementações
+
+Implementações a serem feitas, esperando o seu Pull Request!!!
 
 ## Exemplo em Django
 
