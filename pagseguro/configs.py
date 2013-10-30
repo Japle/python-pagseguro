@@ -7,7 +7,7 @@ class Config(object):
     CHECKOUT_SUFFIX = VERSION + "checkout"
     NOTIFICATION_SUFFIX = VERSION + "transactions/notifications/%s"
     TRANSACTION_SUFFIX = VERSION + "transactions/"
-    CHEKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
+    CHECKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
     NOTIFICATION_URL = BASE_URL + NOTIFICATION_SUFFIX
     TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
     CURRENCY = "BRL"
@@ -16,5 +16,9 @@ class Config(object):
     }
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
-    PAYMENT_REDIRECT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?%s"
+    PAYMENT_URL = (PAYMENT_HOST +
+                   VERSION +
+                   CHECKOUT_SUFFIX +
+                   "/payment.html?code=%s")
+
     DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'

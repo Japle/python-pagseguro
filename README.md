@@ -137,13 +137,9 @@ Para onde o comprador será redirecionado após completar o pagamento
 pg.redirect_url = "http://meusite.com/obrigado"
 ```
 
-### Checando o carrinho de compras
-
-```python
-pg.check()
-{
-
-}
+### Configurando a URL de notificaçao (opcional)
+```
+pg.notification_url = "http://meusite.com/notification"
 ```
 
 ### Efetuando o processo de checkout
@@ -151,17 +147,20 @@ pg.check()
 Depois que o carrinho esta todo configurado e com seus itens inseridos, ex: quando o seu cliente clicar no botão "efetuar pagamento", o seguinte método deverá ser executado.
 
 ```python
-code, redirect_url = pg.checkout()
+response = pg.checkout()
 ```
 
-O método checkout faz a requisição ao pagseguro e retorna o código da transação e a url de redirecionamento.
+O método checkout faz a requisição ao pagseguro e retorna um objeto PagSeguroResponse com os atributos code, date, payment_url, errors.
 
 É aconselhavel armazenar o código da transação em seu banco de dados juntamente com as informações do carrinho para seu controle interno.
 
-Utilize a **redirect_url** para enviar o comprador para a página de pagamento do pagseguro.
+Utilize a **payment_url** para enviar o comprador para a página de pagamento do pagseguro.
+
+```python
+return redirect(response.payment_url)
+```
 
 Após o pagamento o comprador será redirecionado de volta para os eu site através da configuração de url de retorno global ou utilizará a url especificada no parametro **redirect_url**
-
 
 # Notificações
 
