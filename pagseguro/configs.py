@@ -16,9 +16,6 @@ class Config(object):
     }
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
-    PAYMENT_URL = (PAYMENT_HOST +
-                   VERSION +
-                   CHECKOUT_SUFFIX +
-                   "/payment.html?code=%s")
+    PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
 
     DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
