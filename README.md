@@ -6,6 +6,13 @@ Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando
 Instalando
 ==========================
 ```bash
+pip install pagseguro
+```
+
+ou
+
+
+```bash
 pip install -e git+https://github.com/rochacbruno/python-pagseguro#egg=pagseguro
 ```
 
