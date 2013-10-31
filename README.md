@@ -1,5 +1,7 @@
 python-pagseguro
 ================
+[![Build
+Status](https://travis-ci.org/rochabruno/python-pagseguro.png)](https://travis-ci.org/rochabruno/python-pagseguro)
 
 Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando requests.
 
