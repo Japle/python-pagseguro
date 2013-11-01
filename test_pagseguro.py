@@ -3,6 +3,8 @@ import unittest
 
 from pagseguro import PagSeguro
 from pagseguro.configs import Config
+from pagseguro.exceptions import PagSeguroValidationError
+from pagseguro.utils import is_valid_email
 
 
 class PagseguroTest(unittest.TestCase):
@@ -92,6 +94,30 @@ class PagseguroTest(unittest.TestCase):
     def test_reference(self):
         self.pagseguro.reference = '12345'
         self.assertEqual(unicode(self.pagseguro.reference), u'REF12345')
+
+    def test_clean_none_params(self):
+        pagseguro = PagSeguro(email=self.email, token=self.token)
+        sender = self.sender
+        sender['cpf'] = None
+        sender['born_date'] = None
+        pagseguro.sender = self.sender
+        pagseguro.build_checkout_params()
+
+        self.assertTrue('senderCPF' not in pagseguro.data)
+        self.assertTrue('senderBornData' not in pagseguro.data)
+
+    def test_is_valid_email(self):
+        bad_email = 'john.com'
+        pagseguro = PagSeguro(email=bad_email, token=self.token)
+        pagseguro.sender = {
+            'email': bad_email
+        }
+        with self.assertRaises(PagSeguroValidationError):
+            pagseguro.build_checkout_params()
+
+        # Now testing with a valid email
+        pagseguro.sender['email'] = self.sender.get('email')
+        self.assertEqual(is_valid_email(pagseguro.sender['email']), self.sender.get('email'))
 
 if __name__ == '__main__':
     unittest.main()
