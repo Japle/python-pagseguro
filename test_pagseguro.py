@@ -55,12 +55,14 @@ class PagseguroTest(unittest.TestCase):
         self.assertIsNone(self.pagseguro.extra_amount)
         self.assertIsNone(self.pagseguro.redirect_url)
         self.assertIsNone(self.pagseguro.notification_url)
+        self.assertIsNone(self.pagseguro.abandon_url)
 
     def test_build_checkout_params_with_all_params(self):
         self.pagseguro.sender = self.sender
         self.pagseguro.shipping = self.shipping
         self.pagseguro.extra_amount = 12.50
         self.pagseguro.redirect_url = '/redirecionando/'
+        self.pagseguro.abandon_url = '/abandonando/'
         self.pagseguro.items = self.items
         self.pagseguro.build_checkout_params()
         # check all data fields
@@ -69,7 +71,8 @@ class PagseguroTest(unittest.TestCase):
                 'senderEmail', 'senderCPF', 'senderBornDate', 'shippingType',
                 'shippingAddressStreet', 'shippingAddressNumber', 'shippingAddressComplement',
                 'shippingAddressDistrict', 'shippingAddressPostalCode', 'shippingAddressCity',
-                'shippingAddressState', 'shippingAddressCountry', 'shippingCost', 'extraAmount']
+                'shippingAddressState', 'shippingAddressCountry', 'shippingCost', 'extraAmount',
+                'redirectURL', 'abandonURL']
         # items
         item_keys = ['itemId%s', 'itemDescription%s', 'itemAmount%s', 'itemQuantity%s',
                      'itemWeight%s', 'itemShippingCost%s']

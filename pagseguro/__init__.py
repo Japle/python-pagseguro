@@ -66,6 +66,7 @@ class PagSeguro(object):
         self.extra_amount = None
         self.redirect_url = None
         self.notification_url = None
+        self.abandon_url = None
 
 
     def build_checkout_params(self):
@@ -103,6 +104,9 @@ class PagSeguro(object):
 
         if self.notification_url:
             params['notificationURL'] = self.notification_url
+
+        if self.abandon_url:
+            params['abandonURL'] = self.abandon_url
 
         for i, item in enumerate(self.items, 1):
             params['itemId%s' % i] = item.get('id')
