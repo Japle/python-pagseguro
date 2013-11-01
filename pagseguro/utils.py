@@ -5,21 +5,24 @@ import arrow
 
 from .exceptions import PagSeguroValidationError
 
+
 def parse_date(date_str):
     return arrow.get(date_str).datetime
 
 # Validators
 EMPTY_VALUES = (None, '', [], (), {})
 
+
 def is_valid_email(value):
     user_regex = re.compile(
-        r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"  # dot-atom
-        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"$)', # quoted-string
+        r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"
+        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013'
+        r'\014\016-\177])*"$)',
         re.IGNORECASE)
     domain_regex = re.compile(
-        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}|[A-Z0-9-]{2,})$'  # domain
-        # literal form, ipv4 address (SMTP 4.1.3)
-        r'|^\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\]$',
+        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}|'
+        r'[A-Z0-9-]{2,})$|^\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|'
+        r'2[0-4]\d|[0-1]?\d?\d)){3}\]$',
         re.IGNORECASE)
     domain_whitelist = ['localhost']
 
@@ -45,16 +48,20 @@ def is_valid_email(value):
         raise PagSeguroValidationError(u'Email inválido')
     return value
 
+
 def DV_maker(v):
     if v >= 2:
         return 11 - v
     return 0
 
+
 def is_valid_cpf(value):
     error_messages = {
         'invalid': u"CPF Inválido",
-        'max_digits': u"CPF possui 11 dígitos (somente números) ou 14 (com pontos e hífen)",
-        'digits_only': u"Digite um CPF com apenas números ou com ponto e hífen",
+        'max_digits': (u"CPF possui 11 dígitos (somente números) ou 14"
+                       u" (com pontos e hífen)"),
+        'digits_only': (u"Digite um CPF com apenas números ou com ponto e "
+                        u"hífen"),
     }
 
     if value in EMPTY_VALUES:
@@ -70,10 +77,12 @@ def is_valid_cpf(value):
         raise PagSeguroValidationError(error_messages['max_digits'])
     orig_dv = value[-2:]
 
-    new_1dv = sum([i * int(value[idx]) for idx, i in enumerate(range(10, 1, -1))])
+    new_1dv = sum([i * int(value[idx]) for idx, i in
+                   enumerate(range(10, 1, -1))])
     new_1dv = DV_maker(new_1dv % 11)
     value = value[:-2] + str(new_1dv) + value[-1]
-    new_2dv = sum([i * int(value[idx]) for idx, i in enumerate(range(11, 1, -1))])
+    new_2dv = sum([i * int(value[idx]) for idx, i in
+                   enumerate(range(11, 1, -1))])
     new_2dv = DV_maker(new_2dv % 11)
     value = value[:-1] + str(new_2dv)
     if value[-2:] != orig_dv:

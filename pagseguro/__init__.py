@@ -5,6 +5,7 @@ import xmltodict
 from .configs import Config
 from .utils import parse_date, is_valid_email, is_valid_cpf
 
+
 class PagSeguroNotificationResponse(object):
     def __init__(self, xml, config=None):
         self.xml = xml
@@ -68,7 +69,6 @@ class PagSeguro(object):
         self.notification_url = None
         self.abandon_url = None
 
-
     def build_checkout_params(self):
         """ build a dict with params """
         params = {}
@@ -84,12 +84,17 @@ class PagSeguro(object):
             params['shippingType'] = self.shipping.get('type')
             params['shippingAddressStreet'] = self.shipping.get('street')
             params['shippingAddressNumber'] = self.shipping.get('number')
-            params['shippingAddressComplement'] = self.shipping.get('complement')
+            params['shippingAddressComplement'] = self.shipping.get(
+                'complement'
+            )
             params['shippingAddressDistrict'] = self.shipping.get('district')
-            params['shippingAddressPostalCode'] = self.shipping.get('postal_code')
+            params['shippingAddressPostalCode'] = self.shipping.get(
+                'postal_code'
+            )
             params['shippingAddressCity'] = self.shipping.get('city')
             params['shippingAddressState'] = self.shipping.get('state')
-            params['shippingAddressCountry'] = self.shipping.get('country', 'BRA')
+            params['shippingAddressCountry'] = self.shipping.get('country',
+                                                                 'BRA')
 
         if self.shipping and self.shipping.get('cost'):
             params['shippingCost'] = self.shipping.get('cost')

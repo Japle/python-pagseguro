@@ -34,8 +34,10 @@ class PagseguroTest(unittest.TestCase):
             "cost": "1234.56"
         }
         self.items = [
-            {"id": "0001", "description": "Produto 1", "amount": 354.20, "quantity": 2, "weight": 200},
-            {"id": "0002", "description": "Produto 2", "amount": 355.20, "quantity": 1, "weight": 200},
+            {"id": "0001", "description": "Produto 1", "amount": 354.20,
+             "quantity": 2, "weight": 200},
+            {"id": "0002", "description": "Produto 2", "amount": 355.20,
+             "quantity": 1, "weight": 200},
         ]
 
     def test_pagseguro_class(self):
@@ -49,7 +51,8 @@ class PagseguroTest(unittest.TestCase):
         self.assertTrue('currency' in self.pagseguro.data)
         self.assertEqual(self.pagseguro.data['email'], self.email)
         self.assertEqual(self.pagseguro.data['token'], self.token)
-        self.assertEqual(self.pagseguro.data['currency'], self.pagseguro.config.CURRENCY)
+        self.assertEqual(self.pagseguro.data['currency'],
+                         self.pagseguro.config.CURRENCY)
         self.assertIsInstance(self.pagseguro.items, list)
         self.assertIsInstance(self.pagseguro.sender, dict)
         self.assertIsInstance(self.pagseguro.shipping, dict)
@@ -69,15 +72,17 @@ class PagseguroTest(unittest.TestCase):
         self.pagseguro.build_checkout_params()
         # check all data fields
         self.assertIsInstance(self.pagseguro.data, dict)
-        keys = ['email', 'token', 'currency', 'senderName', 'senderAreaCode', 'senderPhone',
-                'senderEmail', 'senderCPF', 'senderBornDate', 'shippingType',
-                'shippingAddressStreet', 'shippingAddressNumber', 'shippingAddressComplement',
-                'shippingAddressDistrict', 'shippingAddressPostalCode', 'shippingAddressCity',
-                'shippingAddressState', 'shippingAddressCountry', 'shippingCost', 'extraAmount',
+        keys = ['email', 'token', 'currency', 'senderName', 'senderAreaCode',
+                'senderPhone', 'senderEmail', 'senderCPF', 'senderBornDate',
+                'shippingType', 'shippingAddressStreet',
+                'shippingAddressNumber', 'shippingAddressComplement',
+                'shippingAddressDistrict', 'shippingAddressPostalCode',
+                'shippingAddressCity', 'shippingAddressState',
+                'shippingAddressCountry', 'shippingCost', 'extraAmount',
                 'redirectURL', 'abandonURL']
         # items
-        item_keys = ['itemId%s', 'itemDescription%s', 'itemAmount%s', 'itemQuantity%s',
-                     'itemWeight%s', 'itemShippingCost%s']
+        item_keys = ['itemId%s', 'itemDescription%s', 'itemAmount%s',
+                     'itemQuantity%s', 'itemWeight%s', 'itemShippingCost%s']
 
         for key in keys:
             self.assertTrue(key in self.pagseguro.data)
@@ -117,7 +122,8 @@ class PagseguroTest(unittest.TestCase):
 
         # Now testing with a valid email
         pagseguro.sender['email'] = self.sender.get('email')
-        self.assertEqual(is_valid_email(pagseguro.sender['email']), self.sender.get('email'))
+        self.assertEqual(is_valid_email(pagseguro.sender['email']),
+                         self.sender.get('email'))
 
     def test_is_valid_cpf(self):
         bad_cpf = '123.456.267-45'
@@ -130,10 +136,12 @@ class PagseguroTest(unittest.TestCase):
 
         # Now testing with a valid email
         pagseguro.sender['cpf'] = '482.268.465-28'
-        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']), pagseguro.sender['cpf'])
+        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']),
+                         pagseguro.sender['cpf'])
 
         pagseguro.sender['cpf'] = '48226846528'
-        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']), pagseguro.sender['cpf'])
+        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']),
+                         pagseguro.sender['cpf'])
 
 
 if __name__ == '__main__':
