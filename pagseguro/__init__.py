@@ -3,7 +3,8 @@ import requests
 import xmltodict
 
 from .configs import Config
-from .utils import parse_date
+from .utils import parse_date, is_valid_email, is_valid_cpf
+
 
 class PagSeguroNotificationResponse(object):
     def __init__(self, xml, config=None):
@@ -66,7 +67,7 @@ class PagSeguro(object):
         self.extra_amount = None
         self.redirect_url = None
         self.notification_url = None
-
+        self.abandon_url = None
 
     def build_checkout_params(self):
         """ build a dict with params """
@@ -75,20 +76,25 @@ class PagSeguro(object):
             params['senderName'] = self.sender.get('name')
             params['senderAreaCode'] = self.sender.get('area_code')
             params['senderPhone'] = self.sender.get('phone')
-            params['senderEmail'] = self.sender.get('email')
-            params['senderCPF'] = self.sender.get('cpf')
+            params['senderEmail'] = is_valid_email(self.sender.get('email'))
+            params['senderCPF'] = is_valid_cpf(self.sender.get('cpf'))
             params['senderBornDate'] = self.sender.get('born_date')
 
         if self.shipping:
             params['shippingType'] = self.shipping.get('type')
             params['shippingAddressStreet'] = self.shipping.get('street')
             params['shippingAddressNumber'] = self.shipping.get('number')
-            params['shippingAddressComplement'] = self.shipping.get('complement')
+            params['shippingAddressComplement'] = self.shipping.get(
+                'complement'
+            )
             params['shippingAddressDistrict'] = self.shipping.get('district')
-            params['shippingAddressPostalCode'] = self.shipping.get('postal_code')
+            params['shippingAddressPostalCode'] = self.shipping.get(
+                'postal_code'
+            )
             params['shippingAddressCity'] = self.shipping.get('city')
             params['shippingAddressState'] = self.shipping.get('state')
-            params['shippingAddressCountry'] = self.shipping.get('country', 'BRA')
+            params['shippingAddressCountry'] = self.shipping.get('country',
+                                                                 'BRA')
 
         if self.shipping and self.shipping.get('cost'):
             params['shippingCost'] = self.shipping.get('cost')
@@ -103,6 +109,9 @@ class PagSeguro(object):
 
         if self.notification_url:
             params['notificationURL'] = self.notification_url
+
+        if self.abandon_url:
+            params['abandonURL'] = self.abandon_url
 
         for i, item in enumerate(self.items, 1):
             params['itemId%s' % i] = item.get('id')

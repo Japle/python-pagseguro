@@ -2,6 +2,8 @@ python-pagseguro
 ================
 [![Build
 Status](https://travis-ci.org/rochacbruno/python-pagseguro.png)](https://travis-ci.org/rochacbruno/python-pagseguro)
+[![Build
+Status](https://drone.io/github.com/rochacbruno/python-pagseguro/status.png)](https://drone.io/github.com/rochacbruno/python-pagseguro/latest)
 
 Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando requests.
 
@@ -25,6 +27,13 @@ git clone https://github.com/rochacbruno/python-pagseguro
 cd python-pagseguro
 pip install -r requirements.txt
 python setup.py install
+```
+
+Rodando os testes
+=================
+
+```
+make test
 ```
 
 Como usar
