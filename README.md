@@ -29,6 +29,13 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
+Rodando os testes
+=================
+
+```
+make test
+```
+
 Como usar
 =========
 
