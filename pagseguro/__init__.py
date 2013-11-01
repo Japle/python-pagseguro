@@ -3,7 +3,7 @@ import requests
 import xmltodict
 
 from .configs import Config
-from .utils import parse_date
+from .utils import parse_date, is_valid_email
 
 class PagSeguroNotificationResponse(object):
     def __init__(self, xml, config=None):
@@ -76,7 +76,7 @@ class PagSeguro(object):
             params['senderName'] = self.sender.get('name')
             params['senderAreaCode'] = self.sender.get('area_code')
             params['senderPhone'] = self.sender.get('phone')
-            params['senderEmail'] = self.sender.get('email')
+            params['senderEmail'] = is_valid_email(self.sender.get('email'))
             params['senderCPF'] = self.sender.get('cpf')
             params['senderBornDate'] = self.sender.get('born_date')
 
