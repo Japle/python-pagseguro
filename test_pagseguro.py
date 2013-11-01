@@ -4,7 +4,7 @@ import unittest
 from pagseguro import PagSeguro
 from pagseguro.configs import Config
 from pagseguro.exceptions import PagSeguroValidationError
-from pagseguro.utils import is_valid_email
+from pagseguro.utils import is_valid_email, is_valid_cpf
 
 
 class PagseguroTest(unittest.TestCase):
@@ -118,6 +118,23 @@ class PagseguroTest(unittest.TestCase):
         # Now testing with a valid email
         pagseguro.sender['email'] = self.sender.get('email')
         self.assertEqual(is_valid_email(pagseguro.sender['email']), self.sender.get('email'))
+
+    def test_is_valid_cpf(self):
+        bad_cpf = '123.456.267-45'
+        pagseguro = PagSeguro(email=self.email, token=self.token)
+        pagseguro.sender = {
+            'cpf': bad_cpf
+        }
+        with self.assertRaises(PagSeguroValidationError):
+            pagseguro.build_checkout_params()
+
+        # Now testing with a valid email
+        pagseguro.sender['cpf'] = '482.268.465-28'
+        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']), pagseguro.sender['cpf'])
+
+        pagseguro.sender['cpf'] = '48226846528'
+        self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']), pagseguro.sender['cpf'])
+
 
 if __name__ == '__main__':
     unittest.main()
