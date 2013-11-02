@@ -1,9 +1,12 @@
 # coding: utf-8
+import logging
 import requests
 import xmltodict
 
 from .configs import Config
 from .utils import parse_date, is_valid_email, is_valid_cpf
+
+logger = logging.getLogger()
 
 
 class PagSeguroNotificationResponse(object):
@@ -13,8 +16,15 @@ class PagSeguroNotificationResponse(object):
         self.parse_xml(xml)
 
     def parse_xml(self, xml):
-        parsed = xmltodict.parse(xml)
-        transaction = parsed['transaction']
+        try:
+            parsed = xmltodict.parse(xml)
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        transaction = parsed.get('transaction', {})
         for k, v in transaction.iteritems():
             setattr(self, k, v)
 
@@ -27,18 +37,26 @@ class PagSeguroCheckoutResponse(object):
         self.date = None
         self.errors = None
         self.payment_url = None
+        logger.debug(self.__dict__)
         self.parse_xml(xml)
 
     def parse_xml(self, xml):
         """ parse returned data """
-        parsed = xmltodict.parse(xml)
+        try:
+            parsed = xmltodict.parse(xml)
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
         if 'errors' in parsed:
             self.errors = parsed['errors']['error']
             return
 
-        checkout = parsed['checkout']
-        self.code = checkout['code']
-        self.date = parse_date(checkout['date'])
+        checkout = parsed.get('checkout', {})
+        self.code = checkout.get('code')
+        self.date = parse_date(checkout.get('date'))
 
         self.payment_url = self.config.PAYMENT_URL % self.code
 
