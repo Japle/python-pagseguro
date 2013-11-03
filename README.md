@@ -218,7 +218,10 @@ A lista completa de valores pode ser conferida em  https://pagseguro.uol.com.br/
 
 # Implementações
 
-Implementações a serem feitas, esperando o seu Pull Request!!!
+> Implementações a serem feitas, esperando o seu Pull Request!!!
+
+## Quokka CMS
+[Quokka Cart PagSeguro Processor](https://github.com/pythonhub/quokka-cart/blob/master/processors/pagseguro_processor.py)
 
 ## Exemplo em Django
 
