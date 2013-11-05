@@ -29,7 +29,7 @@ setup(
     include_package_data=True,
     install_requires=requirements,
     license='MIT',
-    test_suite='test_pagseguro',
+    test_suite='runtests',
     zip_safe=False,
     classifiers=[
         'Development Status :: 3 - Alpha',

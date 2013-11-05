@@ -2,3 +2,5 @@ requests
 xmltodict
 arrow
 flake8
+nose
+coverage

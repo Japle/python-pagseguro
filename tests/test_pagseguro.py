@@ -142,7 +142,3 @@ class PagseguroTest(unittest.TestCase):
         pagseguro.sender['cpf'] = '48226846528'
         self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']),
                          pagseguro.sender['cpf'])
-
-
-if __name__ == '__main__':
-    unittest.main()
