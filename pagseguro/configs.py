@@ -12,9 +12,8 @@ class Config(object):
     NOTIFICATION_URL = BASE_URL + NOTIFICATION_SUFFIX
     TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
     CURRENCY = "BRL"
-    HEADERS = {
-        "Content-Type": "application/x-www-form-urlencoded; charset=%s" % CHARSET
-    }
+    CTYPE = "application/x-www-form-urlencoded; charset={0}".format(CHARSET)
+    HEADERS = {"Content-Type": CTYPE}
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
     PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
