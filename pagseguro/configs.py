@@ -13,7 +13,7 @@ class Config(object):
     TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
     CURRENCY = "BRL"
     HEADERS = {
-        "Content-Type": "application/x-www-form-urlencoded; charset={}".format(CHARSET)
+        "Content-Type": "application/x-www-form-urlencoded; charset=%s" % CHARSET
     }
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
