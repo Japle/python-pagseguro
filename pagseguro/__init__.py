@@ -73,7 +73,6 @@ class PagSeguro(object):
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
-        self.data['currency'] = self.config.CURRENCY
 
         if data and isinstance(data, dict):
             self.data.update(data)
@@ -87,9 +86,9 @@ class PagSeguro(object):
         self.notification_url = None
         self.abandon_url = None
 
-    def build_checkout_params(self):
+    def build_checkout_params(self, **kwargs):
         """ build a dict with params """
-        params = {}
+        params = kwargs or {}
         if self.sender:
             params['senderName'] = self.sender.get('name')
             params['senderAreaCode'] = self.sender.get('area_code')
@@ -176,9 +175,10 @@ class PagSeguro(object):
         """ do a post request """
         return requests.post(url, data=self.data, headers=self.config.HEADERS)
 
-    def checkout(self):
+    def checkout(self, **kwargs):
         """ create a pagseguro checkout """
-        self.build_checkout_params()
+        self.data['currency'] = self.config.CURRENCY
+        self.build_checkout_params(**kwargs)
         response = self.post(url=self.config.CHECKOUT_URL)
         return PagSeguroCheckoutResponse(response.content, config=self.config)
 

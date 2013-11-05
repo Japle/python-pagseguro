@@ -2,6 +2,9 @@
 
 
 class Config(object):
+    def get(self, key, default=None):
+        return getattr(self, key, default)
+
     BASE_URL = "https://ws.pagseguro.uol.com.br"
     VERSION = "/v2/"
     CHECKOUT_SUFFIX = VERSION + "checkout"
