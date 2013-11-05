@@ -187,5 +187,10 @@ class PagSeguro(object):
         response = self.get(url=self.config.NOTIFICATION_URL % code)
         return PagSeguroNotificationResponse(response.content, self.config)
 
+    def check_transaction(self, code):
+        """ check a transaction by its code """
+        response = self.get(url=self.config.TRANSACTION_URL % code)
+        return PagSeguroNotificationResponse(response.content, self.config)
+
     def add_item(self, **kwargs):
         self.items.append(kwargs)
