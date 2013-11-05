@@ -4,6 +4,8 @@ python-pagseguro
 Status](https://travis-ci.org/rochacbruno/python-pagseguro.png)](https://travis-ci.org/rochacbruno/python-pagseguro)
 [![Build
 Status](https://drone.io/github.com/rochacbruno/python-pagseguro/status.png)](https://drone.io/github.com/rochacbruno/python-pagseguro/latest)
+[![Coverage
+Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](https://coveralls.io/r/rochacbruno/python-pagseguro)
 
 Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando requests.
 
