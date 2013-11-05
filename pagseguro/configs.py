@@ -5,6 +5,7 @@ class Config(object):
     BASE_URL = "https://ws.pagseguro.uol.com.br"
     VERSION = "/v2/"
     CHECKOUT_SUFFIX = VERSION + "checkout"
+    CHARSET = "UTF-8"  # ISO-8859-1
     NOTIFICATION_SUFFIX = VERSION + "transactions/notifications/%s"
     TRANSACTION_SUFFIX = VERSION + "transactions/"
     CHECKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
@@ -12,7 +13,7 @@ class Config(object):
     TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
     CURRENCY = "BRL"
     HEADERS = {
-        "Content-Type": "application/x-www-form-urlencoded; charset=ISO-8859-1"
+        "Content-Type": "application/x-www-form-urlencoded; charset={}".format(CHARSET)
     }
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
