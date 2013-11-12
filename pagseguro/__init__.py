@@ -17,7 +17,7 @@ class PagSeguroNotificationResponse(object):
 
     def parse_xml(self, xml):
         try:
-            parsed = xmltodict.parse(xml)
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
             logger.debug(
                 "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
@@ -43,7 +43,7 @@ class PagSeguroCheckoutResponse(object):
     def parse_xml(self, xml):
         """ parse returned data """
         try:
-            parsed = xmltodict.parse(xml)
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
             logger.debug(
                 "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
