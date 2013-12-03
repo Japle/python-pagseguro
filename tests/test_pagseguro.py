@@ -46,9 +46,9 @@ class PagseguroTest(unittest.TestCase):
     def test_pagseguro_initial_attrs(self):
         self.assertIsInstance(self.pagseguro.config, Config)
         self.assertIsInstance(self.pagseguro.data, dict)
-        self.assertTrue('email' in self.pagseguro.data)
-        self.assertTrue('token' in self.pagseguro.data)
-        self.assertTrue('currency' in self.pagseguro.data)
+        self.assertIn('email', self.pagseguro.data)
+        self.assertIn('token', self.pagseguro.data)
+        self.assertIn('currency', self.pagseguro.data)
         self.assertEqual(self.pagseguro.data['email'], self.email)
         self.assertEqual(self.pagseguro.data['token'], self.token)
         self.assertEqual(self.pagseguro.data['currency'],
@@ -85,7 +85,7 @@ class PagseguroTest(unittest.TestCase):
                      'itemQuantity%s', 'itemWeight%s', 'itemShippingCost%s']
 
         for key in keys:
-            self.assertTrue(key in self.pagseguro.data)
+            self.assertIn(key, self.pagseguro.data)
 
         for i, key in enumerate(item_keys, 1):
             self.assertTrue(key % i, self.pagseguro.data)
@@ -108,8 +108,8 @@ class PagseguroTest(unittest.TestCase):
         pagseguro.sender = self.sender
         pagseguro.build_checkout_params()
 
-        self.assertTrue('senderCPF' not in pagseguro.data)
-        self.assertTrue('senderBornData' not in pagseguro.data)
+        self.assertNotIn('senderCPF', pagseguro.data)
+        self.assertNotIn('senderBornData', pagseguro.data)
 
     def test_is_valid_email(self):
         bad_email = 'john.com'
