@@ -2,7 +2,11 @@
 from flask_seguro import app
 from flask_seguro.cart import Cart
 from flask_seguro.products import Products
-from flask import session, jsonify, request, redirect
+from flask import session
+from flask import jsonify
+from flask import request
+from flask import redirect
+from flask import render_template
 from pagseguro import PagSeguro
 
 
@@ -14,7 +18,7 @@ def before_request():
 
 @app.route('/')
 def index():
-    return ''
+    return render_template('base.jinja2')
 
 
 @app.route('/products/list')
