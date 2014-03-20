@@ -45,7 +45,8 @@ class FlasKSeguroTestCase(unittest.TestCase):
         assert 'subtotal' in cart
         return cart
 
-    def testRetrieveCartAndAddRemoveItem(self):
+
+    def test_retrieve_cart_and_add_remove_item(self):
         with flask_seguro.app.test_client() as c:
             response = c.get('/')
             session = flask.session
