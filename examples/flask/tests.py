@@ -7,6 +7,7 @@ import tempfile
 import flask
 from flask import json
 from flask_seguro.cart import Cart
+from flask_seguro.products import Products
 
 
 class TestConfig(object):
@@ -31,15 +32,10 @@ class FlasKSeguroTestCase(unittest.TestCase):
         os.unlink(flask_seguro.app.config['DATABASE'])
 
     def list_products(self):
-        response = self.app.get('/products/list')
-        products = json.loads(response.data)
-        assert 'product_list' in products
-        assert len(products['product_list']) > 0
-        products = products['product_list']
-        return products
+        return Products().get_all()
 
     def check_cart_fields(self, response):
-        cart = json.loads(response.data)
+        cart = flask.session['cart']
         assert 'error_msg' not in cart
         assert 'total' in cart
         assert 'subtotal' in cart
@@ -86,9 +82,7 @@ class FlasKSeguroTestCase(unittest.TestCase):
             assert 'error_msg' in response
             assert u'Email inválido.' == response['error_msg']
 
-            response = c.get('/products/list')
-            products = json.loads(response.data)
-            products = products['product_list']
+            products = self.list_products()
             response = c.get('/cart/add/%s' % (products[0]['id']))
             assert len(session['cart']['items']) == 1
 
