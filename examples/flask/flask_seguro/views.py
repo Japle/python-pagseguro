@@ -18,12 +18,13 @@ def before_request():
 
 @app.route('/')
 def index():
-    return render_template('base.jinja2')
+    return list_products()
 
 
 @app.route('/products/list')
 def list_products():
-    return jsonify({"product_list": Products().get_all()})
+    products = Products().get_all()
+    return render_template('products.jinja2', products=products, cart=session['cart'])
 
 
 @app.route('/cart/add/<item_id>')
@@ -31,9 +32,7 @@ def add_to_cart(item_id):
     cart = Cart(session['cart'])
     if cart.change_item(item_id, 'add'):
         session['cart'] = cart.to_dict()
-        return jsonify(cart.to_dict())
-    else:
-        return jsonify({'error_msg': 'Failure.'})
+    return list_products()
 
 
 @app.route('/cart/remove/<item_id>')
@@ -41,9 +40,15 @@ def remove_from_cart(item_id):
     cart = Cart(session['cart'])
     if cart.change_item(item_id, 'remove'):
         session['cart'] = cart.to_dict()
-        return jsonify(cart.to_dict())
-    else:
-        return jsonify({'error_msg': 'Failure.'})
+    return list_products()
+
+
+@app.route('/notification')
+def notification_view(request):
+    notification_code = request.POST['notificationCode']
+    pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
+    notification_data = pg.check_notification(notification_code)
+    # save notification_data
 
 
 @app.route('/checkout', methods=['POST'])
@@ -74,14 +79,6 @@ def checkout_view():
     pg = checkout_pg(sender, shipping)
     response = pg.checkout()
     return redirect(response.payment_url)
-
-
-@app.route('/notification')
-def notification_view(request):
-    notification_code = request.POST['notificationCode']
-    pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
-    notification_data = pg.check_notification(notification_code)
-    #save notification_data
 
 
 def checkout_pg(sender, shipping):
