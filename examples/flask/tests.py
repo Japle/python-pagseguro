@@ -10,19 +10,13 @@ from flask_seguro.cart import Cart
 from flask_seguro.products import Products
 
 
-class TestConfig(object):
-    EXTRA_AMOUNT = 12.70
-    REDIRECT_URL = "http://meusite.com/obrigado"
-    NOTIFICATION_URL = "http://meusite.com/notification"
-    EMAIL = "seuemail@dominio.com"
-    TOKEN = "ABCDEFGHIJKLMNO"
-
-
 class FlasKSeguroTestCase(unittest.TestCase):
 
     def setUp(self):
         self.db_fd, flask_seguro.app.config['DATABASE'] = tempfile.mkstemp()
-        flask_seguro.app.config.from_object(TestConfig())
+        config_file = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
+        flask_seguro.app.config.from_pyfile(config_file)
         flask_seguro.app.config['TESTING'] = True
         self.app = flask_seguro.app.test_client()
         # flaskr.init_db()
@@ -36,33 +30,34 @@ class FlasKSeguroTestCase(unittest.TestCase):
 
     def check_cart_fields(self, response):
         cart = flask.session['cart']
-        assert 'error_msg' not in cart
-        assert 'total' in cart
-        assert 'subtotal' in cart
+        self.assertNotIn('error_msg', cart)
+        self.assertIn('total', cart)
+        self.assertIn('subtotal', cart)
         return cart
-
 
     def test_retrieve_cart_and_add_remove_item(self):
         with flask_seguro.app.test_client() as c:
             response = c.get('/')
             session = flask.session
-            assert 'cart' in session
-            assert len(session['cart']['items']) == 0
+            self.assertIn('cart', session)
+            self.assertEquals(0, len(session['cart']['items']))
 
             products = self.list_products()
 
             response = c.get('/cart/add/%s' % (products[0]['id']))
-            assert len(session['cart']['items']) == 1
+            self.assertEquals(1, len(session['cart']['items']))
             cart = self.check_cart_fields(response)
-            assert float(cart['subtotal']) == float(products[0]['price'])
+            self.assertEquals(
+                float(cart['subtotal']), float(products[0]['price']))
 
             response = c.get('/cart/remove/%s' % (products[0]['id']))
-            assert len(session['cart']['items']) == 0
+            self.assertEquals(0, len(session['cart']['items']))
             cart = self.check_cart_fields(response)
-            assert float(cart['total']) == float(cart['subtotal']) == float(0)
+            self.assertEquals(0, float(cart['total']))
+            self.assertEquals(float(cart['total']), float(cart['subtotal']))
 
-    def checkout(self, email, c, decode_json=True):
-        response = c.post('/checkout', data={"email": email})
+    def checkout(self, data, c, decode_json=True):
+        response = c.post('/checkout', data=data)
         if decode_json:
             response = json.loads(response.data)
         return response
@@ -72,23 +67,39 @@ class FlasKSeguroTestCase(unittest.TestCase):
             response = c.get('/')
             session = flask.session
 
-            assert len(session['cart']['items']) == 0
+            self.assertEquals(0, len(session['cart']['items']))
 
-            response = self.checkout("valid@email.com", c)
-            assert 'error_msg' in response
-            assert u'Seu carrinho está vazio.' == response['error_msg']
+            data = {"name": "Victor Shyba",
+                    "email": "teste@example.com",
+                    "street": "Av Brig Faria Lima",
+                    "number": 1234,
+                    "complement": "5 andar",
+                    "district": "Jardim Paulistano",
+                    "postal_code": "06650030",
+                    "city": "Sao Paulo",
+                    "state": "SP"}
 
-            response = self.checkout("", c)
-            assert 'error_msg' in response
-            assert u'Email inválido.' == response['error_msg']
+            response = self.checkout(data, c)
+            self.assertIn('error_msg', response)
+            self.assertEquals(
+                u'Seu carrinho está vazio.', response['error_msg'])
+
+            response = self.checkout({}, c)
+            self.assertIn('error_msg', response)
+            self.assertEquals(
+                u'Todos os campos são obrigatórios.', response['error_msg'])
 
             products = self.list_products()
             response = c.get('/cart/add/%s' % (products[0]['id']))
-            assert len(session['cart']['items']) == 1
+            self.assertEquals(1, len(session['cart']['items']))
 
-            response = self.checkout("valid@email.com", c, decode_json=False)
-            assert response.status_code == 302
-            print response.location
+            response = self.checkout(data, c, decode_json=False)
+            self.assertEquals(302, response.status_code)
+            self.assertIn('pagseguro', response.location)
+
+    def test_cart_view(self):
+        response = self.app.get('/cart')
+        self.assertEquals(200, response.status_code)
 
 
 if __name__ == '__main__':
