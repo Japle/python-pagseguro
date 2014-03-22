@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 from flask_seguro import app
-
-
-class Config(object):
-    EXTRA_AMOUNT = 12.70
-    REDIRECT_URL = "http://meusite.com/obrigado"
-    NOTIFICATION_URL = "http://meusite.com/notification"
-    EMAIL = "seuemail@dominio.com"
-    TOKEN = "ABCDEFGHIJKLMNO"
+import os
 
 if __name__ == "__main__":
-    app.config.from_object(Config())
+    config_file = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
+    app.config.from_pyfile(config_file)
     app.run()
