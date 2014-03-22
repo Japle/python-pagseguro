@@ -53,8 +53,8 @@ def remove_from_cart(item_id):
 def notification_view(request):
     notification_code = request.POST['notificationCode']
     pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
-    notification_data = pg.check_notification(notification_code)
-    # save notification_data
+    pg.check_notification(notification_code)
+    # use the return of the function above to update the order
 
 
 @app.route('/checkout', methods=['GET'])
