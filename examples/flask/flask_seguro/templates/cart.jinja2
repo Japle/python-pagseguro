@@ -1,0 +1,23 @@
+{% extends 'base.jinja2' %}
+{% block title %}Carrinho{% endblock %}
+{% block content %}
+<table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart['items'] %}
+        <tr>
+          <td>{{item['description']}}</td>
+          <td>R${{'%0.2f'| format(item['price']|float)}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+</table>
+<p>Subtotal: R${{'%0.2f'| format(cart.subtotal|float)}}</p>
+<p>Taxa Extra: R${{'%0.2f'| format(cart.extra_amount|float)}}</p>
+<p>Total: R${{'%0.2f'| format(cart.total|float)}}</p>
+{% endblock %}
