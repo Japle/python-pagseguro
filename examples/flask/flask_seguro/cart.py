@@ -13,11 +13,13 @@ class Cart:
             self.total = cart_dict["total"]
             self.subtotal = cart_dict["subtotal"]
             self.items = cart_dict["items"]
+        self.extra_amount = float(app.config['EXTRA_AMOUNT'])
 
     def to_dict(self):
         return {"total": self.total,
                 "subtotal": self.subtotal,
-                "items": self.items}
+                "items": self.items,
+                "extra_amount": self.extra_amount}
 
     def change_item(self, item_id, operation):
         product = Products().get_one(item_id)
@@ -25,7 +27,9 @@ class Cart:
             if operation == 'add':
                 self.items.append(product)
             elif operation == 'remove':
-                self.items.remove(product)
+                cart_product = filter(
+                    lambda x: x['id'] == product['id'], self.items)
+                self.items.remove(cart_product[0])
             self.update()
             return True
         else:
@@ -37,6 +41,6 @@ class Cart:
         for product in self.items:
             subtotal += float(product["price"])
         if subtotal > 0:
-            total = subtotal + float(app.config['EXTRA_AMOUNT'])
+            total = subtotal + self.extra_amount
         self.subtotal = subtotal
         self.total = total
