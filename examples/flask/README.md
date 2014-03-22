@@ -2,7 +2,7 @@ FlaskSeguro
 ==========
 Exemplo do python-pagseguro utilizando Flask.
 
-Instalando
+Instalação
 ==========
 
 ```bash
