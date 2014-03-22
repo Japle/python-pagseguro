@@ -17,11 +17,13 @@ pip install -r requirements.txt
 Configuração
 ==========
 Altere o settings.cfg, ele possui as seguintes configurações por padrão:
+```
 EXTRA_AMOUNT = 12.12
 REDIRECT_URL = "http://meusite.com/obrigado"
 NOTIFICATION_URL = "http://meusite.com/notification"
 EMAIL = "seuemail@dominio.com"
 TOKEN = "ABCDEFGHIJKLMNO"
+```
 
 
 Testes
