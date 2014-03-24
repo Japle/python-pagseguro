@@ -229,6 +229,9 @@ A lista completa de valores pode ser conferida em  https://pagseguro.uol.com.br/
 
 ## Exemplo em Flask
 
+[FlaskSeguro](https://github.com/rochacbruno/python-pagseguro/tree/master/examples/flask)
+by @shyba
+
 ## Exemplo em web2py
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rochacbruno/python-pagseguro/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
