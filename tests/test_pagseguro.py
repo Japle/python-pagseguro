@@ -48,11 +48,8 @@ class PagseguroTest(unittest.TestCase):
         self.assertIsInstance(self.pagseguro.data, dict)
         self.assertIn('email', self.pagseguro.data)
         self.assertIn('token', self.pagseguro.data)
-        self.assertIn('currency', self.pagseguro.data)
         self.assertEqual(self.pagseguro.data['email'], self.email)
         self.assertEqual(self.pagseguro.data['token'], self.token)
-        self.assertEqual(self.pagseguro.data['currency'],
-                         self.pagseguro.config.CURRENCY)
         self.assertIsInstance(self.pagseguro.items, list)
         self.assertIsInstance(self.pagseguro.sender, dict)
         self.assertIsInstance(self.pagseguro.shipping, dict)
@@ -72,7 +69,7 @@ class PagseguroTest(unittest.TestCase):
         self.pagseguro.build_checkout_params()
         # check all data fields
         self.assertIsInstance(self.pagseguro.data, dict)
-        keys = ['email', 'token', 'currency', 'senderName', 'senderAreaCode',
+        keys = ['email', 'token', 'senderName', 'senderAreaCode',
                 'senderPhone', 'senderEmail', 'senderCPF', 'senderBornDate',
                 'shippingType', 'shippingAddressStreet',
                 'shippingAddressNumber', 'shippingAddressComplement',
