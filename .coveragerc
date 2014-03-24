@@ -1,0 +1,7 @@
+[run]
+source = pagseguro
+
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
