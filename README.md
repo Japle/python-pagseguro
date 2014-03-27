@@ -83,7 +83,9 @@ Caso o **country** não seja informado o valor default será "BRA"
 
 O **type** pode ser pg.SEDEX, pg.PAC, pg.NONE
 > Opcionalmente pode ser numerico seguindo a tabela pagseguro:
+
 | Número | Descrição | Type |
+| ------ | --------- | ---- |
 | 1 | PAC | pg.PAC |
 | 2 | SEDEX | pg.SEDEX |
 | 3 | Nao especificado | pg.None |
