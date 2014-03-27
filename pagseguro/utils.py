@@ -34,7 +34,7 @@ def is_valid_email(value):
     if not user_regex.match(user_part):
         raise PagSeguroValidationError(u'Email inválido')
 
-    if (not domain_part in domain_whitelist and
+    if (domain_part not in domain_whitelist and
             not domain_regex.match(domain_part)):
         # Try for possible IDN domain-part
         try:

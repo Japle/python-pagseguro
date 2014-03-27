@@ -75,12 +75,9 @@ def checkout_post():
         return jsonify({'error_msg': 'Seu carrinho está vazio.'})
     sender = {
         "name": request.form.get("name"),
-        #"area_code": 11,
-        #"phone": 981001213,
         "email": request.form.get("email"),
     }
     shipping = {
-        #"type": pg.SEDEX,
         "street": request.form.get("street"),
         "number": request.form.get("number"),
         "complement": request.form.get("complement"),
