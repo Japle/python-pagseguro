@@ -238,5 +238,4 @@ by @shyba
 
 ## Exemplo em web2py
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rochacbruno/python-pagseguro/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
