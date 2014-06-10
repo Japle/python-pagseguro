@@ -15,6 +15,9 @@ class PagSeguroNotificationResponse(object):
         self.config = config or {}
         self.parse_xml(xml)
 
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
     def parse_xml(self, xml):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
