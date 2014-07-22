@@ -11,9 +11,11 @@ class Config(object):
     CHARSET = "UTF-8"  # ISO-8859-1
     NOTIFICATION_SUFFIX = VERSION + "transactions/notifications/%s"
     TRANSACTION_SUFFIX = VERSION + "transactions/%s"
+    QUERY_TRANSACTION_SUFFIX = VERSION + "transactions"
     CHECKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
     NOTIFICATION_URL = BASE_URL + NOTIFICATION_SUFFIX
     TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
+    QUERY_TRANSACTION_URL = BASE_URL + QUERY_TRANSACTION_SUFFIX
     CURRENCY = "BRL"
     CTYPE = "application/x-www-form-urlencoded; charset={0}".format(CHARSET)
     HEADERS = {"Content-Type": CTYPE}
