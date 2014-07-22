@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
 
-from pagseguro import PagSeguro
+from pagseguro import PagSeguro, PagSeguroTransactionSearchResult
 from pagseguro.configs import Config
 from pagseguro.exceptions import PagSeguroValidationError
 from pagseguro.utils import is_valid_email, is_valid_cpf
@@ -139,3 +139,63 @@ class PagseguroTest(unittest.TestCase):
         pagseguro.sender['cpf'] = '48226846528'
         self.assertEqual(is_valid_cpf(pagseguro.sender['cpf']),
                          pagseguro.sender['cpf'])
+
+
+class PagSeguroTransactionSearchResultTest(unittest.TestCase):
+
+    def setUp(self):
+        self.email = 'seu@email.com'
+        self.token = '123456'
+        self.xml = """
+        <transactionSearchResult>
+            <date>2011-02-16T20:14:35.000-02:00</date>
+            <currentPage>1</currentPage>
+            <resultsInThisPage>2</resultsInThisPage>
+            <totalPages>1</totalPages>
+            <transactions>
+                <transaction>
+                    <date>2011-02-05T15:46:12.000-02:00</date>
+                    <lastEventDate>2011-02-15T17:39:14.000-03:00</lastEventDate>
+                    <code>9E884542-81B3-4419-9A75-BCC6FB495EF1</code>
+                    <reference>REF1234</reference>
+                    <type>1</type>
+                    <status>3</status>
+                    <paymentMethod>
+                        <type>1</type>
+                    </paymentMethod>
+                    <grossAmount>49900.00</grossAmount>
+                    <discountAmount>0.00</discountAmount>
+                    <feeAmount>0.00</feeAmount>
+                    <netAmount>49900.00</netAmount>
+                    <extraAmount>0.00</extraAmount>
+                </transaction>
+                <transaction>
+                    <date>2011-02-07T18:57:52.000-02:00</date>
+                    <lastEventDate>2011-02-14T21:37:24.000-03:00</lastEventDate>
+                    <code>2FB07A22-68FF-4F83-A356-24153A0C05E1</code>
+                    <reference>REF5678</reference>
+                    <type>3</type>
+                    <status>4</status>
+                    <paymentMethod>
+                        <type>3</type>
+                    </paymentMethod>
+                    <grossAmount>26900.00</grossAmount>
+                    <discountAmount>0.00</discountAmount>
+                    <feeAmount>0.00</feeAmount>
+                    <netAmount>26900.00</netAmount>
+                    <extraAmount>0.00</extraAmount>
+                </transaction>
+            </transactions>
+        </transactionSearchResult>"""
+
+    def test_parse_xml(self):
+        pg = PagSeguro(email=self.email, token=self.token)
+        result = PagSeguroTransactionSearchResult(
+            self.xml, pg.config
+        )
+        self.assertEqual(result.current_page, 1)
+        self.assertEqual(result.results_in_page, 2)
+        self.assertEqual(result.total_pages, 1)
+        self.assertEqual(len(result.transactions), 2)
+
+    
