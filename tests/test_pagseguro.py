@@ -197,5 +197,3 @@ class PagSeguroTransactionSearchResultTest(unittest.TestCase):
         self.assertEqual(result.results_in_page, 2)
         self.assertEqual(result.total_pages, 1)
         self.assertEqual(len(result.transactions), 2)
-
-    
