@@ -4,7 +4,8 @@ from flask import current_app as app
 
 class Cart:
 
-    def __init__(self, cart_dict={}):
+    def __init__(self, cart_dict=None):
+        cart_dict = cart_dict or {}
         if cart_dict == {}:
             self.total = 0
             self.subtotal = 0
