@@ -4,6 +4,7 @@ import requests
 import xmltodict
 
 from .configs import Config
+from .sandbox import ConfigSandbox
 from .utils import parse_date, is_valid_email, is_valid_cpf
 
 logger = logging.getLogger()
@@ -111,8 +112,11 @@ class PagSeguro(object):
     SEDEX = 2
     NONE = 3
 
-    def __init__(self, email, token, data=None):
-        self.config = Config()
+    def __init__(self, email, token, sandbox=False, data=None):
+        if sandbox:
+            self.config = ConfigSandbox()
+        else:
+            self.config = Config()
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
