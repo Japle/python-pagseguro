@@ -4,6 +4,7 @@ import requests
 import xmltodict
 
 from .configs import Config
+from .configs import AbstractConfig
 from .utils import parse_date, is_valid_email, is_valid_cpf
 
 logger = logging.getLogger()
@@ -112,7 +113,7 @@ class PagSeguro(object):
     NONE = 3
 
     def __init__(self, email, token, data=None, config=None):
-        self.config = config or Config()
+        self.config = isinstance(config, AbstractConfig) or Config()
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
