@@ -111,8 +111,8 @@ class PagSeguro(object):
     SEDEX = 2
     NONE = 3
 
-    def __init__(self, email, token, data=None):
-        self.config = Config()
+    def __init__(self, email, token, data=None, config=None):
+        self.config = Config() if not config else config
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
