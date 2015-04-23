@@ -113,7 +113,8 @@ class PagSeguro(object):
     NONE = 3
 
     def __init__(self, email, token, data=None, config=None):
-        self.config = isinstance(config, AbstractConfig) or Config()
+        self.config = config or Config()
+        assert isinstance(self.config, AbstractConfig), "Config should be instance of AbstractConfig"
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
