@@ -112,7 +112,7 @@ class PagSeguro(object):
     NONE = 3
 
     def __init__(self, email, token, data=None, config=None):
-        self.config = Config() if not config else config
+        self.config = config or Config()
         self.data = {}
         self.data['email'] = email
         self.data['token'] = token
