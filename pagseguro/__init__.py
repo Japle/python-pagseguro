@@ -11,6 +11,7 @@ logger = logging.getLogger()
 
 
 class PagSeguroNotificationResponse(object):
+    
     def __init__(self, xml, config=None):
         self.xml = xml
         self.config = config or {}
@@ -29,6 +30,29 @@ class PagSeguroNotificationResponse(object):
             parsed = {}
 
         transaction = parsed.get('transaction', {})
+        for k, v in transaction.iteritems():
+            setattr(self, k, v)
+            
+class PagSeguroPreApprovalNotificationResponse(object):
+    
+    def __init__(self, xml, config=None):
+        self.xml = xml
+        self.config = config or {}
+        self.parse_xml(xml)
+
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
+    def parse_xml(self, xml):
+        try:
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        transaction = parsed.get('preApproval', {})
         for k, v in transaction.iteritems():
             setattr(self, k, v)
             
@@ -292,6 +316,11 @@ class PagSeguro(object):
         """ check a notification by its code """
         response = self.get(url=self.config.NOTIFICATION_URL % code)
         return PagSeguroNotificationResponse(response.content, self.config)
+    
+    def check_pre_approval_notification(self, code):
+        """ check a notification by its code """
+        response = self.get(url=self.config.PRE_APPROVAL_NOTIFICATION_URL % code)
+        return PagSeguroPreApprovalNotificationResponse(response.content, self.config)
 
     def check_transaction(self, code):
         """ check a transaction by its code """
