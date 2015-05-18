@@ -31,6 +31,34 @@ class PagSeguroNotificationResponse(object):
         transaction = parsed.get('transaction', {})
         for k, v in transaction.iteritems():
             setattr(self, k, v)
+            
+class PagSeguroCheckoutSession(object):
+
+    def __init__(self, xml, config=None):
+        self.xml = xml
+        self.config = config or {}
+        self.session_id = None
+        self.errors = None
+        logger.debug(self.__dict__)
+        self.parse_xml(xml)
+
+    def parse_xml(self, xml):
+        
+        """ parse returned data """
+        try:
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
+
+        session = parsed.get('session', {})
+        self.session_id  = session.get('id')
 
 
 class PagSeguroCheckoutResponse(object):
@@ -63,7 +91,8 @@ class PagSeguroCheckoutResponse(object):
         self.date = parse_date(checkout.get('date'))
 
         self.payment_url = self.config.PAYMENT_URL % self.code
-
+        transaction = parsed.get('transaction', {})
+        self.payment_link = transaction.get('paymentLink')
 
 class PagSeguroTransactionSearchResult(object):
 
@@ -131,6 +160,9 @@ class PagSeguro(object):
         self.redirect_url = None
         self.notification_url = None
         self.abandon_url = None
+        self.pre_approval = {}
+        self.checkout_session = None
+        self.payment = {}
 
     def build_checkout_params(self, **kwargs):
         """ build a dict with params """
@@ -142,6 +174,7 @@ class PagSeguro(object):
             params['senderEmail'] = is_valid_email(self.sender.get('email'))
             params['senderCPF'] = is_valid_cpf(self.sender.get('cpf'))
             params['senderBornDate'] = self.sender.get('born_date')
+            params['senderHash'] = self.sender.get('hash')
 
         if self.shipping:
             params['shippingType'] = self.shipping.get('type')
@@ -166,6 +199,7 @@ class PagSeguro(object):
             params['extraAmount'] = self.extra_amount
 
         params['reference'] = self.reference
+        params['receiverEmail'] = self.data['email']
 
         if self.redirect_url:
             params['redirectURL'] = self.redirect_url
@@ -183,6 +217,25 @@ class PagSeguro(object):
             params['itemQuantity%s' % i] = item.get('quantity')
             params['itemWeight%s' % i] = item.get('weight')
             params['itemShippingCost%s' % i] = item.get('shipping_cost')
+            
+        if self.payment:
+            
+            params['paymentMethod'] = self.payment.get('method')
+            params['paymentMode'] = self.payment.get('mode')
+
+        if self.pre_approval:
+
+            params['preApprovalCharge'] = self.pre_approval.get('charge')
+            params['preApprovalName'] = self.pre_approval.get('name')
+            params['preApprovalDetails'] = self.pre_approval.get('details')
+            params['preApprovalAmountPerPayment'] = self.pre_approval.get('amount_per_payment')
+            params['preApprovalMaxAmountPerPayment'] = self.pre_approval.get('max_amount_per_payment')
+            params['preApprovalPeriod']= self.pre_approval.get('period')
+            params['preApprovalMaxPaymentsPerPeriod']= self.pre_approval.get('max_payments_per_period')
+            params['preApprovalMaxAmountPerPeriod']= self.pre_approval.get('max_amount_per_period')
+            params['preApprovalInitialDate']= self.pre_approval.get('initial_date')
+            params['preApprovalFinalDate']= self.pre_approval.get('final_date')
+            params['preApprovalMaxTotalAmount'] = self.pre_approval.get('max_total_amount')
 
         self.data.update(params)
         self.clean_none_params()
@@ -221,13 +274,20 @@ class PagSeguro(object):
         """ do a post request """
         return requests.post(url, data=self.data, headers=self.config.HEADERS)
 
-    def checkout(self, **kwargs):
+    def checkout(self, transparent=False, **kwargs):
         """ create a pagseguro checkout """
         self.data['currency'] = self.config.CURRENCY
         self.build_checkout_params(**kwargs)
-        response = self.post(url=self.config.CHECKOUT_URL)
+        if transparent:
+            response = self.post(url=self.config.TRANSPARENT_CHECKOUT_URL)
+        else:
+            response = self.post(url=self.config.CHECKOUT_URL)
         return PagSeguroCheckoutResponse(response.content, config=self.config)
-
+    
+    def transparent_checkout_session(self, **kwargs):
+        response = self.post(url=self.config.SESSION_CHECKOUT_URL)
+        return PagSeguroCheckoutSession(response.content, config=self.config).session_id
+    
     def check_notification(self, code):
         """ check a notification by its code """
         response = self.get(url=self.config.NOTIFICATION_URL % code)
