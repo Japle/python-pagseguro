@@ -9,6 +9,19 @@ Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](http
 [![Code Health](https://landscape.io/github/rochacbruno/python-pagseguro/master/landscape.svg)](https://landscape.io/github/rochacbruno/python-pagseguro/master)
 
 
+> Esta biblioteca foi desenvolvida e disponibilizada de forma aberta e gratuita para facilitar a vida dos desenvolvedores que precisam integrar com o meio de pagamento PagSeguro da UOL, porém o PagSeguro e a UOL não fazem questão de facilitar a vida dos desenvolvedores e retribuir em forma de atenção todo o lucro que eles conquistaram utilizando soluções OpenSource. 
+
+> Portanto eu "Bruno Rocha" aconselho a todos a utilização de serviços alternativos, indico o uso do MOIP, caso possa, prefira utilizar o MOIP! que é uma empresa que parece ter um pouco mais de cuidado e atenção com a comunidade de desenvolvimento de software.
+
+# USE O MOIP
+- https://labs.moip.com.br/blog/conheca-o-moipy-nossa-lib-oficial-para-python/
+- https://github.com/moiplabs/moipy
+
+![moip](https://labs.moip.com.br/wp-content/themes/moiplabs/img/logoHeader.png)
+
+
+# Se você INFELIZMENTE precisar utilizar o Pag-Seguro, então:
+
 Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando requests.
 
 Instalando
