@@ -2,8 +2,6 @@ python-pagseguro
 ================
 [![Build
 Status](https://travis-ci.org/rochacbruno/python-pagseguro.png)](https://travis-ci.org/rochacbruno/python-pagseguro)
-[![Build
-Status](https://drone.io/github.com/rochacbruno/python-pagseguro/status.png)](https://drone.io/github.com/rochacbruno/python-pagseguro/latest)
 [![Coverage
 Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](https://coveralls.io/r/rochacbruno/python-pagseguro)
 [![Code Health](https://landscape.io/github/rochacbruno/python-pagseguro/master/landscape.svg)](https://landscape.io/github/rochacbruno/python-pagseguro/master)
