@@ -7,8 +7,8 @@ class AbstractConfig(object):
     __metaclass__ = abc.ABCMeta
 
     @classmethod
-    def get(self, key, default=None):
-        return getattr(self, key, default)
+    def get(cls, key, default=None):
+        return getattr(cls, key, default)
 
     @abc.abstractproperty
     def BASE_URL(self):
