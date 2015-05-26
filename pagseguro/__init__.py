@@ -5,7 +5,7 @@ import xmltodict
 
 from .configs import Config
 from .configs import AbstractConfig
-from .utils import parse_date, is_valid_email, is_valid_cpf
+from .utils import parse_date, is_valid_email, is_valid_cpf, is_valid_cnpj
 
 logger = logging.getLogger()
 
@@ -56,6 +56,29 @@ class PagSeguroPreApprovalNotificationResponse(object):
         for k, v in transaction.iteritems():
             setattr(self, k, v)
             
+class PagSeguroPreApprovalCancel(object):
+    
+    def __init__(self, xml, config=None):
+        self.xml = xml
+        self.config = config or {}
+        self.parse_xml(xml)
+
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
+    def parse_xml(self, xml):
+        try:
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        transaction = parsed.get('result', {})
+        for k, v in transaction.iteritems():
+            setattr(self, k, v)
+            
 class PagSeguroCheckoutSession(object):
 
     def __init__(self, xml, config=None):
@@ -83,6 +106,34 @@ class PagSeguroCheckoutSession(object):
 
         session = parsed.get('session', {})
         self.session_id  = session.get('id')
+
+class PagSeguroPreApprovalPayment(object):
+    def __init__(self, xml, config=None):
+        self.xml = xml
+        self.config = config or {}
+        self.code = None
+        self.errors = None
+        logger.debug(self.__dict__)
+        self.parse_xml(xml)
+
+    def parse_xml(self, xml):
+        """ parse returned data """
+        try:
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
+
+        result = parsed.get('result', {})
+        self.code = result.get('transactionCode')
+        self.date = parse_date(result.get('date'))
+
 
 
 class PagSeguroCheckoutResponse(object):
@@ -197,6 +248,7 @@ class PagSeguro(object):
             params['senderPhone'] = self.sender.get('phone')
             params['senderEmail'] = is_valid_email(self.sender.get('email'))
             params['senderCPF'] = is_valid_cpf(self.sender.get('cpf'))
+            params['senderCNPJ'] = is_valid_cnpj(self.sender.get('cnpj'))
             params['senderBornDate'] = self.sender.get('born_date')
             params['senderHash'] = self.sender.get('hash')
 
@@ -263,6 +315,26 @@ class PagSeguro(object):
 
         self.data.update(params)
         self.clean_none_params()
+        
+    def build_pre_approval_payment_params(self, **kwargs):
+
+        """ build a dict with params """
+        params = kwargs or {}
+        
+        params['reference'] = self.reference
+        params['preApprovalCode'] = self.code
+        params['receiverEmail'] = self.data['email']
+        
+        for i, item in enumerate(self.items, 1):
+            params['itemId%s' % i] = item.get('id')
+            params['itemDescription%s' % i] = item.get('description')
+            params['itemAmount%s' % i] = item.get('amount')
+            params['itemQuantity%s' % i] = item.get('quantity')
+            params['itemWeight%s' % i] = item.get('weight')
+            params['itemShippingCost%s' % i] = item.get('shipping_cost')
+            
+        self.data.update(params)
+        self.clean_none_params()
 
     def clean_none_params(self):
         copy = dict(self.data)
@@ -321,6 +393,17 @@ class PagSeguro(object):
         """ check a notification by its code """
         response = self.get(url=self.config.PRE_APPROVAL_NOTIFICATION_URL % code)
         return PagSeguroPreApprovalNotificationResponse(response.content, self.config)
+    
+    def pre_approval_ask_payment(self, **kwargs):
+        """ ask form a subscribe payment """
+        self.build_pre_approval_payment_params(**kwargs)
+        response = self.post(url=self.config.PRE_APPROVAL_PAYMENT_URL)
+        return PagSeguroPreApprovalPayment(response.content, self.config)
+    
+    def pre_approval_cancel(self, code):
+        """ cancel a subscribe """
+        response = self.get(url=self.config.PRE_APPROVAL_CANCEL_URL % code)
+        return PagSeguroPreApprovalCancel(response.content, self.config)
 
     def check_transaction(self, code):
         """ check a transaction by its code """

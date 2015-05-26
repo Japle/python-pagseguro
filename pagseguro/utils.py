@@ -65,7 +65,7 @@ def is_valid_cpf(value):
     }
 
     if value in EMPTY_VALUES:
-        return ''
+        return u''
     orig_value = value[:]
     if not value.isdigit():
         value = re.sub("[-\.]", "", value)
@@ -83,6 +83,43 @@ def is_valid_cpf(value):
     value = value[:-2] + str(new_1dv) + value[-1]
     new_2dv = sum([i * int(value[idx]) for idx, i in
                    enumerate(range(11, 1, -1))])
+    new_2dv = DV_maker(new_2dv % 11)
+    value = value[:-1] + str(new_2dv)
+    if value[-2:] != orig_dv:
+        raise PagSeguroValidationError(error_messages['invalid'])
+
+    return orig_value
+
+
+
+def is_valid_cnpj(value):
+    
+    error_messages = {
+        'invalid': u"CNPJ Inválido",
+        'max_digits': (u"CNPJ possui 14 dígitos (somente números) ou 14"
+                       u" (com pontos e hífen)"),
+        'digits_only': (u"Digite um CNPJ com apenas números ou com ponto, barra "
+                        u"hífen"),
+    }
+    
+    if value in EMPTY_VALUES:
+        return u''
+    if not value.isdigit():
+        value = re.sub("[-/\.]", "", value)
+    orig_value = value[:]
+    try:
+        int(value)
+    except ValueError:
+        raise PagSeguroValidationError(error_messages['digits_only'])
+    if len(value) != 14:
+        raise PagSeguroValidationError(error_messages['max_digits'])
+
+    orig_dv = value[-2:]
+
+    new_1dv = sum([i * int(value[idx]) for idx, i in enumerate(range(5, 1, -1) + range(9, 1, -1))])
+    new_1dv = DV_maker(new_1dv % 11)
+    value = value[:-2] + str(new_1dv) + value[-1]
+    new_2dv = sum([i * int(value[idx]) for idx, i in enumerate(range(6, 1, -1) + range(9, 1, -1))])
     new_2dv = DV_maker(new_2dv % 11)
     value = value[:-1] + str(new_2dv)
     if value[-2:] != orig_dv:
