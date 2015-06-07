@@ -162,8 +162,8 @@ class Config(AbstractConfig):
     CHARSET = "UTF-8"  # ISO-8859-1
     NOTIFICATION_SUFFIX = VERSION + "transactions/notifications/%s"
     PRE_APPROVAL_NOTIFICATION_SUFFIX = VERSION + "pre-approvals/notifications/%s"
-    PRE_APPROVAL_PAYMENT_URL = VERSION + "/pre-approvals/payment"
-    PRE_APPROVAL_CANCEL_URL = VERSION + "/pre-approvals/cancel/%s"
+    PRE_APPROVAL_PAYMENT_URL = BASE_URL + VERSION + "pre-approvals/payment"
+    PRE_APPROVAL_CANCEL_URL = BASE_URL + VERSION + "pre-approvals/cancel/%s"
     
     TRANSACTION_SUFFIX = VERSION + "transactions/%s"
     QUERY_TRANSACTION_SUFFIX = VERSION + "transactions"

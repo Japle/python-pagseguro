@@ -74,6 +74,10 @@ class PagSeguroPreApprovalCancel(object):
                 "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
             )
             parsed = {}
+            
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
 
         transaction = parsed.get('result', {})
         for k, v in transaction.iteritems():
@@ -323,7 +327,6 @@ class PagSeguro(object):
         
         params['reference'] = self.reference
         params['preApprovalCode'] = self.code
-        params['receiverEmail'] = self.data['email']
         
         for i, item in enumerate(self.items, 1):
             params['itemId%s' % i] = item.get('id')
