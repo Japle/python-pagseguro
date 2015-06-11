@@ -15,6 +15,7 @@ class PagSeguroNotificationResponse(object):
     def __init__(self, xml, config=None):
         self.xml = xml
         self.config = config or {}
+        self.errors = None
         self.parse_xml(xml)
 
     def __getitem__(self, key):
@@ -28,6 +29,10 @@ class PagSeguroNotificationResponse(object):
                 "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
             )
             parsed = {}
+            
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
 
         transaction = parsed.get('transaction', {})
         for k, v in transaction.iteritems():
@@ -38,6 +43,7 @@ class PagSeguroPreApprovalNotificationResponse(object):
     def __init__(self, xml, config=None):
         self.xml = xml
         self.config = config or {}
+        self.errors = None
         self.parse_xml(xml)
 
     def __getitem__(self, key):
@@ -51,6 +57,10 @@ class PagSeguroPreApprovalNotificationResponse(object):
                 "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
             )
             parsed = {}
+        
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
 
         transaction = parsed.get('preApproval', {})
         for k, v in transaction.iteritems():
@@ -61,6 +71,7 @@ class PagSeguroPreApprovalCancel(object):
     def __init__(self, xml, config=None):
         self.xml = xml
         self.config = config or {}
+        self.errors = None
         self.parse_xml(xml)
 
     def __getitem__(self, key):
