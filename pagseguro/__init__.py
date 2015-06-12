@@ -159,8 +159,11 @@ class PagSeguroCheckoutResponse(object):
         self.date = None
         self.errors = None
         self.payment_url = None
+        self.payment_link = None
+        self.transaction = None
         logger.debug(self.__dict__)
         self.parse_xml(xml)
+        
 
     def parse_xml(self, xml):
         """ parse returned data """
@@ -181,8 +184,11 @@ class PagSeguroCheckoutResponse(object):
         self.date = parse_date(checkout.get('date'))
 
         self.payment_url = self.config.PAYMENT_URL % self.code
-        transaction = parsed.get('transaction', {})
-        self.payment_link = transaction.get('paymentLink')
+        
+        # this is used only for transparent checkout process
+        
+        self.transaction = parsed.get('transaction', {})
+        self.payment_link = self.transaction.get('paymentLink')
 
 class PagSeguroTransactionSearchResult(object):
 
