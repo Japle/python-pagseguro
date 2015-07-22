@@ -189,7 +189,7 @@ class PagSeguro(object):
 
     def clean_none_params(self):
         copy = dict(self.data)
-        for k, v in copy.iteritems():
+        for k, v in copy.items():
             if not v:
                 del self.data[k]
 
