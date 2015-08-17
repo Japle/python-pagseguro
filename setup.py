@@ -30,8 +30,7 @@ setup(
     install_requires=requirements,
     extras_require={
         "tests": [
-            "flake8",
-            "nose"
+            "flake8", "nose"
         ]
     },
     license='MIT',
@@ -50,5 +49,4 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
     ],
-    keywords='pagseguro, payment, payments, credit-card'
-)
+    keywords='pagseguro, payment, payments, credit-card')

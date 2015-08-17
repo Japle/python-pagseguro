@@ -29,7 +29,8 @@ def cart():
 @app.route('/products/list')
 def list_products():
     products = Products().get_all()
-    return render_template('products.jinja2', products=products,
+    return render_template('products.jinja2',
+                           products=products,
                            cart=session['cart'])
 
 
@@ -64,10 +65,8 @@ def checkout_get():
 
 @app.route('/checkout', methods=['POST'])
 def checkout_post():
-    for field in ['name', 'email', 'street', 'number',
-                  'complement', 'district', 'postal_code',
-                  'city', 'state'
-                  ]:
+    for field in ['name', 'email', 'street', 'number', 'complement',
+                  'district', 'postal_code', 'city', 'state']:
         if not request.form.get(field, False):
             return jsonify({'error_msg': 'Todos os campos são obrigatórios.'})
     cart = Cart(session['cart'])

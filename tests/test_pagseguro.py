@@ -8,7 +8,6 @@ from pagseguro.utils import is_valid_email, is_valid_cpf
 
 
 class PagseguroTest(unittest.TestCase):
-
     def setUp(self):
         self.token = '123456'
         self.email = 'seu@email.com'
@@ -34,10 +33,20 @@ class PagseguroTest(unittest.TestCase):
             "cost": "1234.56"
         }
         self.items = [
-            {"id": "0001", "description": "Produto 1", "amount": 354.20,
-             "quantity": 2, "weight": 200},
-            {"id": "0002", "description": "Produto 2", "amount": 355.20,
-             "quantity": 1, "weight": 200},
+            {
+                "id": "0001",
+                "description": "Produto 1",
+                "amount": 354.20,
+                "quantity": 2,
+                "weight": 200
+            },
+            {
+                "id": "0002",
+                "description": "Produto 2",
+                "amount": 355.20,
+                "quantity": 1,
+                "weight": 200
+            },
         ]
 
     def test_pagseguro_class(self):
@@ -111,9 +120,7 @@ class PagseguroTest(unittest.TestCase):
     def test_is_valid_email(self):
         bad_email = 'john.com'
         pagseguro = PagSeguro(email=bad_email, token=self.token)
-        pagseguro.sender = {
-            'email': bad_email
-        }
+        pagseguro.sender = {'email': bad_email}
         with self.assertRaises(PagSeguroValidationError):
             pagseguro.build_checkout_params()
 
@@ -125,9 +132,7 @@ class PagseguroTest(unittest.TestCase):
     def test_is_valid_cpf(self):
         bad_cpf = '123.456.267-45'
         pagseguro = PagSeguro(email=self.email, token=self.token)
-        pagseguro.sender = {
-            'cpf': bad_cpf
-        }
+        pagseguro.sender = {'cpf': bad_cpf}
         with self.assertRaises(PagSeguroValidationError):
             pagseguro.build_checkout_params()
 
@@ -142,7 +147,6 @@ class PagseguroTest(unittest.TestCase):
 
 
 class PagSeguroTransactionSearchResultTest(unittest.TestCase):
-
     def setUp(self):
         self.email = 'seu@email.com'
         self.token = '123456'
@@ -190,9 +194,7 @@ class PagSeguroTransactionSearchResultTest(unittest.TestCase):
 
     def test_parse_xml(self):
         pg = PagSeguro(email=self.email, token=self.token)
-        result = PagSeguroTransactionSearchResult(
-            self.xml, pg.config
-        )
+        result = PagSeguroTransactionSearchResult(self.xml, pg.config)
         self.assertEqual(result.current_page, 1)
         self.assertEqual(result.results_in_page, 2)
         self.assertEqual(result.total_pages, 1)

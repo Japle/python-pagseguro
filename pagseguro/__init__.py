@@ -24,8 +24,7 @@ class PagSeguroNotificationResponse(object):
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
             logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
-            )
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
             parsed = {}
 
         transaction = parsed.get('transaction', {})
@@ -50,8 +49,7 @@ class PagSeguroCheckoutResponse(object):
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
             logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
-            )
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
             parsed = {}
 
         if 'errors' in parsed:
@@ -85,8 +83,7 @@ class PagSeguroTransactionSearchResult(object):
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
             logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
-            )
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
             parsed = {}
 
         search_result = parsed.get('transactionSearchResult', {})
@@ -148,12 +145,10 @@ class PagSeguro(object):
             params['shippingAddressStreet'] = self.shipping.get('street')
             params['shippingAddressNumber'] = self.shipping.get('number')
             params['shippingAddressComplement'] = self.shipping.get(
-                'complement'
-            )
+                'complement')
             params['shippingAddressDistrict'] = self.shipping.get('district')
             params['shippingAddressPostalCode'] = self.shipping.get(
-                'postal_code'
-            )
+                'postal_code')
             params['shippingAddressCity'] = self.shipping.get('city')
             params['shippingAddressState'] = self.shipping.get('state')
             params['shippingAddressCountry'] = self.shipping.get('country',
@@ -238,15 +233,15 @@ class PagSeguro(object):
         response = self.get(url=self.config.TRANSACTION_URL % code)
         return PagSeguroNotificationResponse(response.content, self.config)
 
-    def query_transactions(self, initial_date, final_date, page=None,
+    def query_transactions(self, initial_date, final_date,
+                           page=None,
                            max_results=None):
         """ query transaction by date range """
         last_page = False
         results = []
         while last_page is False:
             search_result = self._consume_query_transactions(
-                initial_date, final_date, page, max_results
-            )
+                initial_date, final_date, page, max_results)
             results.extend(search_result.transactions)
             if search_result.current_page is None or \
                search_result.total_pages is None or \
@@ -257,7 +252,8 @@ class PagSeguro(object):
 
         return results
 
-    def _consume_query_transactions(self, initial_date, final_date, page=None,
+    def _consume_query_transactions(self, initial_date, final_date,
+                                    page=None,
                                     max_results=None):
         querystring = {
             'initialDate': initial_date.strftime('%Y-%m-%dT%H:%M'),

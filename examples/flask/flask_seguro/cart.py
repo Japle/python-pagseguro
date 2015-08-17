@@ -3,7 +3,6 @@ from flask import current_app as app
 
 
 class Cart:
-
     def __init__(self, cart_dict=None):
         cart_dict = cart_dict or {}
         if cart_dict == {}:
@@ -17,10 +16,12 @@ class Cart:
         self.extra_amount = float(app.config['EXTRA_AMOUNT'])
 
     def to_dict(self):
-        return {"total": self.total,
-                "subtotal": self.subtotal,
-                "items": self.items,
-                "extra_amount": self.extra_amount}
+        return {
+            "total": self.total,
+            "subtotal": self.subtotal,
+            "items": self.items,
+            "extra_amount": self.extra_amount
+        }
 
     def change_item(self, item_id, operation):
         product = Products().get_one(item_id)

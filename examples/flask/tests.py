@@ -11,7 +11,6 @@ from flask_seguro.products import Products
 
 
 class FlasKSeguroTestCase(unittest.TestCase):
-
     def setUp(self):
         self.db_fd, flask_seguro.app.config['DATABASE'] = tempfile.mkstemp()
         config_file = os.path.join(
@@ -69,15 +68,17 @@ class FlasKSeguroTestCase(unittest.TestCase):
 
             self.assertEquals(0, len(session['cart']['items']))
 
-            data = {"name": "Victor Shyba",
-                    "email": "teste@example.com",
-                    "street": "Av Brig Faria Lima",
-                    "number": 1234,
-                    "complement": "5 andar",
-                    "district": "Jardim Paulistano",
-                    "postal_code": "06650030",
-                    "city": "Sao Paulo",
-                    "state": "SP"}
+            data = {
+                "name": "Victor Shyba",
+                "email": "teste@example.com",
+                "street": "Av Brig Faria Lima",
+                "number": 1234,
+                "complement": "5 andar",
+                "district": "Jardim Paulistano",
+                "postal_code": "06650030",
+                "city": "Sao Paulo",
+                "state": "SP"
+            }
 
             response = self.checkout(data, c)
             self.assertIn('error_msg', response)

@@ -17,13 +17,11 @@ def is_valid_email(value):
     user_regex = re.compile(
         r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"
         r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013'
-        r'\014\016-\177])*"$)',
-        re.IGNORECASE)
+        r"""\014\016-\177])*"$)""", re.IGNORECASE)
     domain_regex = re.compile(
         r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}|'
         r'[A-Z0-9-]{2,})$|^\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|'
-        r'2[0-4]\d|[0-1]?\d?\d)){3}\]$',
-        re.IGNORECASE)
+        r'2[0-4]\d|[0-1]?\d?\d)){3}\]$', re.IGNORECASE)
     domain_whitelist = ['localhost']
 
     if not value or '@' not in value:
@@ -77,12 +75,12 @@ def is_valid_cpf(value):
         raise PagSeguroValidationError(error_messages['max_digits'])
     orig_dv = value[-2:]
 
-    new_1dv = sum([i * int(value[idx]) for idx, i in
-                   enumerate(range(10, 1, -1))])
+    new_1dv = sum([i * int(value[idx])
+                   for idx, i in enumerate(range(10, 1, -1))])
     new_1dv = DV_maker(new_1dv % 11)
     value = value[:-2] + str(new_1dv) + value[-1]
-    new_2dv = sum([i * int(value[idx]) for idx, i in
-                   enumerate(range(11, 1, -1))])
+    new_2dv = sum([i * int(value[idx])
+                   for idx, i in enumerate(range(11, 1, -1))])
     new_2dv = DV_maker(new_2dv % 11)
     value = value[:-1] + str(new_2dv)
     if value[-2:] != orig_dv:
