@@ -2,7 +2,7 @@
 import unittest
 
 from pagseguro import PagSeguro, PagSeguroTransactionSearchResult
-from pagseguro.configs import Config , ConfigSandbox
+from pagseguro.configs import Config, ConfigSandbox
 from pagseguro.exceptions import PagSeguroValidationError
 from pagseguro.utils import is_valid_email, is_valid_cpf
 
@@ -12,7 +12,9 @@ class PagseguroTest(unittest.TestCase):
     def setUp(self):
         self.token = 'sandbox_token'
         self.email = 'pagseguro_email'
-        self.pagseguro = PagSeguro(token=self.token, email=self.email, config=ConfigSandbox())
+        self.pagseguro = PagSeguro(
+            token=self.token, email=self.email, config=ConfigSandbox()
+        )
         self.sender = {
             'name': u'Guybrush Treepwood',
             'area_code': 11,

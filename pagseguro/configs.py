@@ -5,7 +5,6 @@ import abc
 
 class AbstractConfig(object):
 
-
     __metaclass__ = abc.ABCMeta
 
     @classmethod
