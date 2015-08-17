@@ -33,7 +33,7 @@ setup(
             "flake8",
             "nose"
         ]
-    }
+    },
     license='MIT',
     test_suite='runtests',
     zip_safe=False,
