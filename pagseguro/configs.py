@@ -4,6 +4,8 @@ import abc
 
 
 class AbstractConfig(object):
+
+
     __metaclass__ = abc.ABCMeta
 
     @classmethod
@@ -172,6 +174,28 @@ class Config(AbstractConfig):
     HEADERS = {"Content-Type": CTYPE}
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
+    PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
+
+    DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
+
+
+class ConfigSandbox(AbstractConfig):
+    BASE_URL = "https://ws.sandbox.pagseguro.uol.com.br"
+    VERSION = "/v2/"
+    CHECKOUT_SUFFIX = VERSION + "checkout"
+    CHARSET = "UTF-8"  # ISO-8859-1
+    NOTIFICATION_SUFFIX = VERSION + "transactions/notifications/%s"
+    TRANSACTION_SUFFIX = VERSION + "transactions/%s"
+    QUERY_TRANSACTION_SUFFIX = VERSION + "transactions"
+    CHECKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
+    NOTIFICATION_URL = BASE_URL + NOTIFICATION_SUFFIX
+    TRANSACTION_URL = BASE_URL + TRANSACTION_SUFFIX
+    QUERY_TRANSACTION_URL = BASE_URL + QUERY_TRANSACTION_SUFFIX
+    CURRENCY = "BRL"
+    CTYPE = "application/x-www-form-urlencoded; charset={0}".format(CHARSET)
+    HEADERS = {"Content-Type": CTYPE}
+    REFERENCE_PREFIX = "REF%s"
+    PAYMENT_HOST = "https://sandbox.pagseguro.uol.com.br"
     PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
 
     DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'

@@ -28,6 +28,12 @@ setup(
     package_dir={'pagseguro': 'pagseguro'},
     include_package_data=True,
     install_requires=requirements,
+    extras_require = {
+        "tests": [
+            "flake8",
+            "nose"
+        ]
+    }
     license='MIT',
     test_suite='runtests',
     zip_safe=False,

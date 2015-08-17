@@ -189,7 +189,7 @@ class PagSeguro(object):
 
     def clean_none_params(self):
         copy = dict(self.data)
-        for k, v in copy.items():
+        for k, v in list(copy.items()):
             if not v:
                 del self.data[k]
 
@@ -207,7 +207,7 @@ class PagSeguro(object):
 
     @reference.setter
     def reference(self, value):
-        if not isinstance(value, (str, unicode)):
+        if not isinstance(value, str):
             value = str(value)
         if value.startswith(self.reference_prefix):
             value = value[len(self.reference_prefix):]
