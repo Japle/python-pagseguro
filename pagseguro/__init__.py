@@ -150,7 +150,6 @@ class PagSeguroPreApprovalPayment(object):
         self.date = parse_date(result.get('date'))
 
 
-
 class PagSeguroCheckoutResponse(object):
     def __init__(self, xml, config=None):
         self.xml = xml
@@ -229,6 +228,45 @@ class PagSeguroTransactionSearchResult(object):
         if self.total_pages is not None:
             self.total_pages = int(self.total_pages)
 
+class PagSeguroPreApprovalSearch(object):
+
+    current_page = None
+    total_pages = None
+    results_in_page = None
+    pre_approvals = []
+
+    def __init__(self, xml, config=None):
+        self.xml = xml
+        self.config = config or {}
+        self.errors = None
+        self.parse_xml(xml)
+
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
+    def parse_xml(self, xml):
+        try:
+            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
+        except Exception as e:
+            logger.debug(
+                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
+            )
+            parsed = {}
+
+        search_result = parsed.get('preApprovalSearchResult', {})
+        self.pre_approvals = search_result.get('preApprovals', {})
+        self.pre_approvals = self.pre_approvals.get('preApproval', [])
+        if not isinstance(self.pre_approvals, list):
+            self.pre_approvals = [self.pre_approvals]
+        self.current_page = search_result.get('currentPage', None)
+        if self.current_page is not None:
+            self.current_page = int(self.current_page)
+        self.results_in_page = search_result.get('resultsInThisPage', None)
+        if self.results_in_page is not None:
+            self.results_in_page = int(self.results_in_page)
+        self.total_pages = search_result.get('totalPages', None)
+        if self.total_pages is not None:
+            self.total_pages = int(self.total_pages)
 
 class PagSeguro(object):
     """ Pag Seguro V2 wrapper """
@@ -462,5 +500,38 @@ class PagSeguro(object):
         response = self.get(url=self.config.QUERY_TRANSACTION_URL)
         return PagSeguroTransactionSearchResult(response.content, self.config)
 
+    def query_pre_approvals(self, initial_date, final_date, page=None,
+                           max_results=None):
+        """ query pre-approvals by date range """
+        last_page = False
+        results = []
+        while last_page is False:
+            search_result = self._consume_query_pre_approvals(
+                initial_date, final_date, page, max_results
+            )
+            results.extend(search_result.pre_approvals)
+            if search_result.current_page is None or \
+               search_result.total_pages is None or \
+               search_result.current_page == search_result.total_pages:
+                last_page = True
+            else:
+                page = search_result.current_page + 1
+
+        return results
+    
+    def _consume_query_pre_approvals(self, initial_date, final_date, page=None,
+                                    max_results=None):
+        querystring = {
+            'initialDate': initial_date.strftime('%Y-%m-%dT%H:%M'),
+            'finalDate': final_date.strftime('%Y-%m-%dT%H:%M'),
+            'page': page,
+            'maxPageResults': max_results,
+        }
+        self.data.update(querystring)
+        self.clean_none_params()
+        
+        response = self.get(url=self.config.QUERY_PRE_APPROVAL_URL)
+        return PagSeguroPreApprovalSearch(response.content, self.config)
+    
     def add_item(self, **kwargs):
         self.items.append(kwargs)
