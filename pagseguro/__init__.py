@@ -3,8 +3,7 @@ import logging
 import requests
 import xmltodict
 
-from .configs import Config
-from .configs import AbstractConfig
+from .configs import Config, ConfigSandbox, AbstractConfig
 from .utils import parse_date, is_valid_email, is_valid_cpf, is_valid_cnpj
 
 logger = logging.getLogger()

@@ -8,7 +8,7 @@ Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](http
 
 <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=rochacbruno%40gmail%2ecom&amp;lc=BR&amp;item_name=pythonpagseguro&amp;no_note=0&amp;currency_code=BRL&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest"><img alt='Donate with Paypal' src='http://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif' /></a>
 
-> Esta biblioteca foi desenvolvida e disponibilizada de forma aberta e gratuita para facilitar a vida dos desenvolvedores que precisam integrar com o meio de pagamento PagSeguro da UOL, porém o PagSeguro e a UOL não fazem questão de facilitar a vida dos desenvolvedores e retribuir em forma de atenção todo o lucro que eles conquistaram utilizando soluções OpenSource. 
+> Esta biblioteca foi desenvolvida e disponibilizada de forma aberta e gratuita para facilitar a vida dos desenvolvedores que precisam integrar com o meio de pagamento PagSeguro da UOL, porém o PagSeguro e a UOL não fazem questão de facilitar a vida dos desenvolvedores e retribuir em forma de atenção todo o lucro que eles conquistaram utilizando soluções OpenSource.
 
 > Portanto eu "Bruno Rocha" aconselho a todos a utilização de serviços alternativos, indico o uso do MOIP, caso possa, prefira utilizar o MOIP! que é uma empresa que parece ter um pouco mais de cuidado e atenção com a comunidade de desenvolvimento de software.
 
@@ -66,6 +66,30 @@ from pagseguro import PagSeguro
 
 pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO")
 ```
+
+### Sandbox e Config Customizadas
+
+Ao instanciar um objecto `PagSeguro`, você poderá passar um parâmetro `config` contendo a class de configuração a ser usada pela classe. A lib implementa 2 classes, uma para ser usada em produção e outra em modo sandbox. Abaixo, um exemplo de como usar a lib em modo Sandbox.
+
+```python
+from pagseguro import PagSeguro, ConfigSandbox
+
+pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO", config=ConfigSandbox())
+```
+
+Caso queira criar sua própria classe de Config, crie uma class herdando de `AbstractConfig` e adicione as variáveis necessárias
+
+Ex:
+
+```python
+from pagseguro import AbstractConfig
+
+class MinhaClassConfig(AbstractConfig):
+	VAR1 = 'valor'
+	VAR2 = 'outro_valor'
+	...
+```
+
 
 ### Configurando os dados do comprador
 
