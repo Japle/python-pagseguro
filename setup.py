@@ -17,7 +17,7 @@ requirements = ['requests', 'xmltodict', 'arrow']
 
 setup(
     name='pagseguro',
-    version='0.1.8.dev0',
+    version='0.1.9.dev0',
     description='Pagseguro API v2 wrapper',
     author='Bruno Rocha',
     author_email='rochacbruno@gmail.com',
