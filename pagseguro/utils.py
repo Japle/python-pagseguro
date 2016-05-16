@@ -91,9 +91,8 @@ def is_valid_cpf(value):
     return orig_value
 
 
-
 def is_valid_cnpj(value):
-    
+
     error_messages = {
         'invalid': u"CNPJ Inválido",
         'max_digits': (u"CNPJ possui 14 dígitos (somente números) ou 14"
@@ -101,7 +100,7 @@ def is_valid_cnpj(value):
         'digits_only': (u"Digite um CNPJ com apenas números ou com ponto, barra "
                         u"hífen"),
     }
-    
+
     if value in EMPTY_VALUES:
         return u''
     if not value.isdigit():
