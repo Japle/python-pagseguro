@@ -291,6 +291,10 @@ class PagSeguroPreApprovalSearch(object):
             )
             parsed = {}
 
+        if 'errors' in parsed:
+            self.errors = parsed['errors']['error']
+            return
+
         search_result = parsed.get('preApprovalSearchResult', {})
         self.pre_approvals = search_result.get('preApprovals', {})
         self.pre_approvals = self.pre_approvals.get('preApproval', [])
@@ -566,6 +570,7 @@ class PagSeguro(object):
             'page': page,
             'maxPageResults': max_results,
         }
+
         self.data.update(querystring)
         self.clean_none_params()
 
