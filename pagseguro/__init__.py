@@ -319,6 +319,7 @@ class PagSeguro(object):
     NONE = 3
 
     def __init__(self, email, token, data=None, config=None):
+
         self.config = config or Config()
         assert isinstance(self.config, AbstractConfig), \
             "Config should be instance of AbstractConfig"
@@ -337,6 +338,7 @@ class PagSeguro(object):
         self.redirect_url = None
         self.notification_url = None
         self.abandon_url = None
+        self.credit_card = {}
         self.pre_approval = {}
         self.checkout_session = None
         self.payment = {}
@@ -400,6 +402,26 @@ class PagSeguro(object):
 
             params['paymentMethod'] = self.payment.get('method')
             params['paymentMode'] = self.payment.get('mode')
+
+        if self.credit_card:
+
+            params['creditCardToken'] = self.credit_card.get('credit_card_token')
+            params['installmentQuantity'] = self.credit_card.get('installment_quantity')
+            params['installmentValue'] = self.credit_card.get('installment_value')
+            params['noInterestInstallmentQuantity'] = self.credit_card.get('no_interest_installment_quantity')
+            params['creditCardHolderName'] = self.credit_card.get('card_holder_name')
+            params['creditCardHolderCPF'] = self.credit_card.get('card_holder_cpf')
+            params['creditCardHolderBirthDate'] = self.credit_card.get('card_holder_birth_date')
+            params['creditCardHolderAreaCode'] = self.credit_card.get('card_holder_area_code')
+            params['creditCardHolderPhone'] = self.credit_card.get('card_holder_phone')
+            params['billingAddressStreet'] = self.credit_card.get('billing_address_street')
+            params['billingAddressNumber'] = self.credit_card.get('billing_address_number')
+            params['billingAddressComplement'] = self.credit_card.get('billing_address_complement')
+            params['billingAddressDistrict'] = self.credit_card.get('billing_address_district')
+            params['billingAddressPostalCode'] = self.credit_card.get('billing_address_postal_code')
+            params['billingAddressCity'] = self.credit_card.get('billing_address_city')
+            params['billingAddressState'] = self.credit_card.get('billing_address_state')
+            params['billingAddressCountry'] = 'BRA'
 
         if self.pre_approval:
 

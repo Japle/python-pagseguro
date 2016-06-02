@@ -6,6 +6,9 @@ import abc
 class AbstractConfig(object):
     __metaclass__ = abc.ABCMeta
 
+    def __init__(self, sandbox=False):
+        self.sandbox = sandbox
+
     @classmethod
     def get(self, key, default=None):
         return getattr(self, key, default)
@@ -156,6 +159,7 @@ class AbstractConfig(object):
 
 
 class Config(AbstractConfig):
+
     BASE_URL = "https://ws.pagseguro.uol.com.br"
     VERSION = "/v2/"
     CHECKOUT_SUFFIX = VERSION + "checkout"
@@ -164,12 +168,11 @@ class Config(AbstractConfig):
     PRE_APPROVAL_NOTIFICATION_SUFFIX = VERSION + "pre-approvals/notifications/%s"
     PRE_APPROVAL_PAYMENT_URL = BASE_URL + VERSION + "pre-approvals/payment"
     PRE_APPROVAL_CANCEL_URL = BASE_URL + VERSION + "pre-approvals/cancel/%s"
-    
     TRANSACTION_SUFFIX = VERSION + "transactions/%s"
     QUERY_TRANSACTION_SUFFIX = VERSION + "transactions"
     SESSION_CHECKOUT_SUFFIX = VERSION + "sessions/"
     SESSION_CHECKOUT_URL = BASE_URL + SESSION_CHECKOUT_SUFFIX
-    TRANSPARENT_CHECKOUT_URL =  BASE_URL + QUERY_TRANSACTION_SUFFIX + '/'
+    TRANSPARENT_CHECKOUT_URL = BASE_URL + QUERY_TRANSACTION_SUFFIX + '/'
     CHECKOUT_URL = BASE_URL + CHECKOUT_SUFFIX
     NOTIFICATION_URL = BASE_URL + NOTIFICATION_SUFFIX
     PRE_APPROVAL_NOTIFICATION_URL = BASE_URL + PRE_APPROVAL_NOTIFICATION_SUFFIX
