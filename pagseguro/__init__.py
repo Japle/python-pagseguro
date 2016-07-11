@@ -32,12 +32,8 @@ class PagSeguroNotificationResponse(object):
             return
 
         transaction = parsed.get('transaction', {})
-        try:
-            for k, v in transaction.iteritems():
-                setattr(self, k, v)
-        except AttributeError:
-            for k, v in transaction.items():
-                setattr(self, k, v)
+        for k, v in transaction.items():
+            setattr(self, k, v)
 
 
 class PagSeguroPreApprovalNotificationResponse(object):
@@ -63,12 +59,8 @@ class PagSeguroPreApprovalNotificationResponse(object):
             return
 
         transaction = parsed.get('preApproval', {})
-        try:
-            for k, v in transaction.iteritems():
-                setattr(self, k, v)
-        except AttributeError:
-            for k, v in transaction.items():
-                setattr(self, k, v)
+        for k, v in transaction.items():
+            setattr(self, k, v)
 
 
 class PagSeguroPreApprovalCancel(object):
@@ -94,12 +86,8 @@ class PagSeguroPreApprovalCancel(object):
             return
 
         transaction = parsed.get('result', {})
-        try:
-            for k, v in transaction.iteritems():
-                setattr(self, k, v)
-        except AttributeError:
-            for k, v in transaction.items():
-                setattr(self, k, v)
+        for k, v in transaction.items():
+            setattr(self, k, v)
 
 
 class PagSeguroCheckoutSession(object):
