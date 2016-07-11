@@ -6,7 +6,6 @@ import unittest
 import tempfile
 import flask
 from flask import json
-from flask_seguro.cart import Cart
 from flask_seguro.products import Products
 
 

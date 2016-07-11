@@ -2,7 +2,7 @@
 import unittest
 
 from pagseguro import PagSeguro, PagSeguroTransactionSearchResult
-from pagseguro.configs import Config, ConfigSandbox
+from pagseguro.configs import ConfigSandbox
 from pagseguro.exceptions import PagSeguroValidationError
 from pagseguro.utils import is_valid_email, is_valid_cpf
 
