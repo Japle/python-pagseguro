@@ -605,7 +605,6 @@ class PagSeguro(object):
         return PagSeguroPreApprovalSearch(response.content, self.config)
 
     def query_pre_approvals_by_code(self, code):
-
         """ query pre-approvals by code """
         result = self._consume_query_pre_approvals_by_code(code)
         return result
