@@ -32,7 +32,7 @@ class PagSeguroNotificationResponse(object):
             return
 
         transaction = parsed.get('transaction', {})
-        for k, v in transaction.iteritems():
+        for k, v in transaction.items():
             setattr(self, k, v)
 
 
@@ -59,7 +59,7 @@ class PagSeguroPreApprovalNotificationResponse(object):
             return
 
         transaction = parsed.get('preApproval', {})
-        for k, v in transaction.iteritems():
+        for k, v in transaction.items():
             setattr(self, k, v)
 
 
@@ -86,7 +86,7 @@ class PagSeguroPreApprovalCancel(object):
             return
 
         transaction = parsed.get('result', {})
-        for k, v in transaction.iteritems():
+        for k, v in transaction.items():
             setattr(self, k, v)
 
 
