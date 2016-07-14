@@ -9,16 +9,11 @@ from .utils import parse_date, is_valid_email, is_valid_cpf, is_valid_cnpj
 logger = logging.getLogger()
 
 
-class PagSeguroNotificationResponse(object):
-
-    def __init__(self, xml, config=None):
+class XMLParser(object):
+    def __init__(self, xml):
         self.xml = xml
-        self.config = config or {}
         self.errors = None
         self.parse_xml(xml)
-
-    def __getitem__(self, key):
-        getattr(self, key, None)
 
     def parse_xml(self, xml):
         try:
@@ -29,146 +24,109 @@ class PagSeguroNotificationResponse(object):
 
         if 'errors' in parsed:
             self.errors = parsed['errors']['error']
-            return
 
+        return parsed
+
+
+class PagSeguroNotificationResponse(XMLParser):
+    def __init__(self, xml, config=None):
+        super(PagSeguroNotificationResponse, self).__init__(xml)
+        self.config = config or {}
+
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
+    def parse_xml(self, xml):
+        parsed = super(PagSeguroNotificationResponse, self).parse_xml(xml)
+        if self.errors:
+            return
         transaction = parsed.get('transaction', {})
         for k, v in transaction.items():
             setattr(self, k, v)
 
 
-class PagSeguroPreApprovalNotificationResponse(object):
-
+class PagSeguroPreApprovalNotificationResponse(XMLParser):
     def __init__(self, xml, config=None):
-        self.xml = xml
+        super(PagSeguroPreApprovalNotificationResponse, self).__init__(xml)
         self.config = config or {}
-        self.errors = None
-        self.parse_xml(xml)
 
     def __getitem__(self, key):
         getattr(self, key, None)
 
     def parse_xml(self, xml):
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroPreApprovalNotificationResponse,
+                       self).parse_xml(xml)
+        if self.errors:
             return
-
-        transaction = parsed.get('preApproval', {})
+        transaction = parsed.get('transaction', {})
         for k, v in transaction.items():
             setattr(self, k, v)
 
 
-class PagSeguroPreApprovalCancel(object):
-
+class PagSeguroPreApprovalCancel(XMLParser):
     def __init__(self, xml, config=None):
-        self.xml = xml
+        super(PagSeguroPreApprovalCancel, self).__init__(xml)
         self.config = config or {}
-        self.errors = None
-        self.parse_xml(xml)
 
     def __getitem__(self, key):
         getattr(self, key, None)
 
     def parse_xml(self, xml):
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroPreApprovalCancel, self).parse_xml(xml)
+        if self.errors:
             return
-
-        transaction = parsed.get('result', {})
+        transaction = parsed.get('transaction', {})
         for k, v in transaction.items():
             setattr(self, k, v)
 
 
-class PagSeguroCheckoutSession(object):
-
+class PagSeguroCheckoutSession(XMLParser):
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
         self.session_id = None
-        self.errors = None
         logger.debug(self.__dict__)
-        self.parse_xml(xml)
+        super(PagSeguroCheckoutSession, self).__init__(xml)
 
     def parse_xml(self, xml):
-        """ parse returned data """
-
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroCheckoutSession, self).parse_xml(xml)
+        if self.errors:
             return
-
         session = parsed.get('session', {})
         self.session_id = session.get('id')
 
 
-class PagSeguroPreApprovalPayment(object):
+class PagSeguroPreApprovalPayment(XMLParser):
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
         self.code = None
-        self.errors = None
         logger.debug(self.__dict__)
-        self.parse_xml(xml)
+        super(PagSeguroPreApprovalPayment, self).__init__(xml)
 
     def parse_xml(self, xml):
-        """ parse returned data """
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroPreApprovalPayment, self).parse_xml(xml)
+        if self.errors:
             return
-
         result = parsed.get('result', {})
         self.code = result.get('transactionCode')
         self.date = parse_date(result.get('date'))
 
 
-class PagSeguroCheckoutResponse(object):
+class PagSeguroCheckoutResponse(XMLParser):
 
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
         self.code = None
         self.date = None
-        self.errors = None
         self.payment_url = None
         self.payment_link = None
         self.transaction = None
         logger.debug(self.__dict__)
-        self.parse_xml(xml)
+        super(PagSeguroCheckoutResponse, self).__init__(xml)
 
     def parse_xml(self, xml):
-        """ parse returned data """
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroCheckoutResponse, self).parse_xml(xml)
+        if self.errors:
             return
-
         checkout = parsed.get('checkout', {})
         self.code = checkout.get('code')
         self.date = parse_date(checkout.get('date'))
@@ -181,28 +139,23 @@ class PagSeguroCheckoutResponse(object):
         self.payment_link = self.transaction.get('paymentLink')
 
 
-class PagSeguroTransactionSearchResult(object):
-
+class PagSeguroTransactionSearchResult(XMLParser):
     current_page = None
     total_pages = None
     results_in_page = None
     transactions = []
 
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
-        self.parse_xml(xml)
+        super(PagSeguroTransactionSearchResult, self).__init__(xml)
 
     def __getitem__(self, key):
         getattr(self, key, None)
 
     def parse_xml(self, xml):
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
+        parsed = super(PagSeguroTransactionSearchResult, self).parse_xml(xml)
+        if self.errors:
+            return
         search_result = parsed.get('transactionSearchResult', {})
         self.transactions = search_result.get('transactions', {})
         self.transactions = self.transactions.get('transaction', [])
@@ -219,24 +172,19 @@ class PagSeguroTransactionSearchResult(object):
             self.total_pages = int(self.total_pages)
 
 
-class PagSeguroPreApproval(object):
+class PagSeguroPreApproval(XMLParser):
 
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
-        self.errors = None
-        self.parse_xml(xml)
+        super(PagSeguroPreApproval, self).__init__(xml)
 
     def __getitem__(self, key):
         getattr(self, key, None)
 
     def parse_xml(self, xml):
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
+        parsed = super(PagSeguroPreApproval, self).parse_xml(xml)
+        if self.errors:
+            return
         result = parsed.get('preApproval', {})
         self.name = result.get('name', None)
         self.code = result.get('code', None)
@@ -249,7 +197,7 @@ class PagSeguroPreApproval(object):
         self.sender = result.get('sender', {})
 
 
-class PagSeguroPreApprovalSearch(object):
+class PagSeguroPreApprovalSearch(XMLParser):
 
     current_page = None
     total_pages = None
@@ -257,25 +205,16 @@ class PagSeguroPreApprovalSearch(object):
     pre_approvals = []
 
     def __init__(self, xml, config=None):
-        self.xml = xml
         self.config = config or {}
-        self.errors = None
-        self.parse_xml(xml)
+        super(PagSeguroPreApprovalSearch, self).__init__(xml)
 
     def __getitem__(self, key):
         getattr(self, key, None)
 
     def parse_xml(self, xml):
-        try:
-            parsed = xmltodict.parse(xml, encoding="iso-8859-1")
-        except Exception as e:
-            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
-            parsed = {}
-
-        if 'errors' in parsed:
-            self.errors = parsed['errors']['error']
+        parsed = super(PagSeguroPreApprovalSearch, self).parse_xml(xml)
+        if self.errors:
             return
-
         search_result = parsed.get('preApprovalSearchResult', {})
         self.pre_approvals = search_result.get('preApprovals', {})
         self.pre_approvals = self.pre_approvals.get('preApproval', [])
