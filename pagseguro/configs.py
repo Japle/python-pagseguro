@@ -2,7 +2,7 @@
 import abc
 
 
-class AbstractConfig(object):
+class AbstractConfig(object):  # pragma: no cover
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, sandbox=False):
