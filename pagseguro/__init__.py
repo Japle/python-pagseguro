@@ -495,7 +495,7 @@ class PagSeguro(object):
             response = self.post(url=self.config.CHECKOUT_URL)
         return PagSeguroCheckoutResponse(response.content, config=self.config)
 
-    def transparent_checkout_session(self, **kwargs):
+    def transparent_checkout_session(self):
         response = self.post(url=self.config.SESSION_CHECKOUT_URL)
         return PagSeguroCheckoutSession(response.content,
                                         config=self.config).session_id
