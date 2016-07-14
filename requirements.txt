@@ -1,6 +1,3 @@
-requests
-xmltodict
-arrow
-flake8
-nose
-coverage
+requests==2.10.0
+xmltodict==0.10.2
+arrow==0.8.0

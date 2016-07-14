@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 
-import os
-import sys
-
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
-
 readme = open('README.md').read()
-requirements = ['requests', 'xmltodict', 'arrow']
+
+with open('requirements.txt') as reqs:
+    requirements = reqs.read().split()
+
+with open('requirements_dev.txt') as test_reqs:
+    test_requirements = test_reqs.read().split()
+
 
 setup(
     name='pagseguro',
@@ -22,19 +21,13 @@ setup(
     author='Bruno Rocha',
     author_email='rochacbruno@gmail.com',
     url='https://github.com/rochacbruno/python-pagseguro',
-    packages=[
-        'pagseguro',
-    ],
+    packages=['pagseguro', ],
     package_dir={'pagseguro': 'pagseguro'},
     include_package_data=True,
     install_requires=requirements,
-    extras_require={
-        "tests": [
-            "flake8", "nose"
-        ]
-    },
     license='MIT',
-    test_suite='runtests',
+    test_suite='tests',
+    tests_require=test_requirements,
     zip_safe=False,
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -49,4 +42,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
     ],
-    keywords='pagseguro, payment, payments, credit-card')
+    keywords='pagseguro, payment, payments, credit-card'
+)
