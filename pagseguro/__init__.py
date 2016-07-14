@@ -24,8 +24,7 @@ class PagSeguroNotificationResponse(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -52,8 +51,7 @@ class PagSeguroPreApprovalNotificationResponse(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -80,8 +78,7 @@ class PagSeguroPreApprovalCancel(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -109,8 +106,7 @@ class PagSeguroCheckoutSession(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -135,8 +131,7 @@ class PagSeguroPreApprovalPayment(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -167,8 +162,7 @@ class PagSeguroCheckoutResponse(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
@@ -206,8 +200,7 @@ class PagSeguroTransactionSearchResult(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         search_result = parsed.get('transactionSearchResult', {})
@@ -241,9 +234,7 @@ class PagSeguroPreApproval(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e)
-            )
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         result = parsed.get('preApproval', {})
@@ -278,8 +269,7 @@ class PagSeguroPreApprovalSearch(object):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
         except Exception as e:
-            logger.debug(
-                "Cannot parse the returned xml '{0}' -> '{1}'".format(xml, e))
+            logger.debug('Cannot parse the returned xml "%s" -> "%s"', xml, e)
             parsed = {}
 
         if 'errors' in parsed:
