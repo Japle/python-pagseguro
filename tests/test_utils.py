@@ -11,8 +11,10 @@ from dateutil.tz import tzutc
 
 def test_is_valid_email():
     valid = 'test@email.com'
+    valid2 = u'user@росси́я.ро'
     not_valid = '@asd.com'
     not_valid2 = 'bad'
+    not_valid3 = u'user@росси́я'
 
     with pytest.raises(PagSeguroValidationError):
         is_valid_email(not_valid)
@@ -20,7 +22,11 @@ def test_is_valid_email():
     with pytest.raises(PagSeguroValidationError):
         is_valid_email(not_valid2)
 
+    with pytest.raises(PagSeguroValidationError):
+        is_valid_email(not_valid3)
+
     assert is_valid_email(valid) == 'test@email.com'
+    assert is_valid_email(valid2) == u'user@росси́я.ро'
 
 
 def test_parse_date():
