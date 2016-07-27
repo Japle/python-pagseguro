@@ -15,6 +15,9 @@ class XMLParser(object):
         self.errors = None
         self.parse_xml(xml)
 
+    def __getitem__(self, key):
+        getattr(self, key, None)
+
     def parse_xml(self, xml):
         try:
             parsed = xmltodict.parse(xml, encoding="iso-8859-1")
@@ -33,9 +36,6 @@ class PagSeguroNotificationResponse(XMLParser):
         super(PagSeguroNotificationResponse, self).__init__(xml)
         self.config = config or {}
 
-    def __getitem__(self, key):
-        getattr(self, key, None)
-
     def parse_xml(self, xml):
         parsed = super(PagSeguroNotificationResponse, self).parse_xml(xml)
         if self.errors:
@@ -49,9 +49,6 @@ class PagSeguroPreApprovalNotificationResponse(XMLParser):
     def __init__(self, xml, config=None):
         super(PagSeguroPreApprovalNotificationResponse, self).__init__(xml)
         self.config = config or {}
-
-    def __getitem__(self, key):
-        getattr(self, key, None)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroPreApprovalNotificationResponse,
@@ -67,9 +64,6 @@ class PagSeguroPreApprovalCancel(XMLParser):
     def __init__(self, xml, config=None):
         super(PagSeguroPreApprovalCancel, self).__init__(xml)
         self.config = config or {}
-
-    def __getitem__(self, key):
-        getattr(self, key, None)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroPreApprovalCancel, self).parse_xml(xml)
@@ -149,9 +143,6 @@ class PagSeguroTransactionSearchResult(XMLParser):
         self.config = config or {}
         super(PagSeguroTransactionSearchResult, self).__init__(xml)
 
-    def __getitem__(self, key):
-        getattr(self, key, None)
-
     def parse_xml(self, xml):
         parsed = super(PagSeguroTransactionSearchResult, self).parse_xml(xml)
         if self.errors:
@@ -177,9 +168,6 @@ class PagSeguroPreApproval(XMLParser):
     def __init__(self, xml, config=None):
         self.config = config or {}
         super(PagSeguroPreApproval, self).__init__(xml)
-
-    def __getitem__(self, key):
-        getattr(self, key, None)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroPreApproval, self).parse_xml(xml)
@@ -207,9 +195,6 @@ class PagSeguroPreApprovalSearch(XMLParser):
     def __init__(self, xml, config=None):
         self.config = config or {}
         super(PagSeguroPreApprovalSearch, self).__init__(xml)
-
-    def __getitem__(self, key):
-        getattr(self, key, None)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroPreApprovalSearch, self).parse_xml(xml)
