@@ -48,7 +48,8 @@ class Config(dict):
         )
 
         kwargs = {key.upper(): val for key, val in kwargs.items()}
-        for key, val in defaults.items():
+        keys = defaults.keys()
+        for key in keys:
             # only add override keys to properties
             value = kwargs.pop(key, defaults[key])
             setattr(self, key, value)
