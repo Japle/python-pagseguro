@@ -155,6 +155,14 @@ class AbstractConfig(object):  # pragma: no cover
     @DATETIME_FORMAT.setter
     def DATETIME_FORMAT(self, value):
         self._DATETIME_FORMAT = value
+        
+    @abc.abstractproperty
+    def USE_SHIPPING(self):
+        return self._USE_SHIPPING
+        
+    @USE_SHIPPING.setter
+    def USE_SHIPPING(self, value):
+        self._USE_SHIPPING = value
 
 
 class Config(AbstractConfig):
@@ -187,6 +195,7 @@ class Config(AbstractConfig):
     PAYMENT_HOST = "https://pagseguro.uol.com.br"
     PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
     DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
+    USE_SHIPPING = True
 
 
 class ConfigSandbox(AbstractConfig):
@@ -207,5 +216,5 @@ class ConfigSandbox(AbstractConfig):
     REFERENCE_PREFIX = "REF%s"
     PAYMENT_HOST = "https://sandbox.pagseguro.uol.com.br"
     PAYMENT_URL = PAYMENT_HOST + CHECKOUT_SUFFIX + "/payment.html?code=%s"
-
     DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
+    USE_SHIPPING = True
