@@ -261,7 +261,7 @@ class PagSeguro(object):
             params['senderBornDate'] = self.sender.get('born_date')
             params['senderHash'] = self.sender.get('hash')
 
-        if config.USE_SHIPPING
+        if self.config.USE_SHIPPING
             if self.shipping:
                 params['shippingType'] = self.shipping.get('type')
                 params['shippingAddressStreet'] = self.shipping.get('street')
