@@ -2,7 +2,6 @@
 import pytest
 
 from pagseguro import PagSeguro, PagSeguroTransactionSearchResult
-from pagseguro.configs import ConfigSandbox
 from pagseguro.exceptions import PagSeguroValidationError
 from pagseguro.utils import is_valid_email, is_valid_cpf
 
@@ -12,7 +11,7 @@ EMAIL = 'pagseguro_email'
 
 @pytest.fixture
 def pagseguro_sandbox():
-    return PagSeguro(token=TOKEN, email=EMAIL, config=ConfigSandbox())
+    return PagSeguro(token=TOKEN, email=EMAIL, config=dict(sandbox=True))
 
 
 @pytest.fixture
@@ -65,7 +64,6 @@ def test_pagseguro_class(pagseguro_sandbox):
 
 
 def test_pagseguro_initial_attrs(pagseguro_sandbox):
-    assert isinstance(pagseguro_sandbox.config, ConfigSandbox)
     assert isinstance(pagseguro_sandbox.data, dict)
     assert 'email' in pagseguro_sandbox.data
     assert 'token' in pagseguro_sandbox.data

@@ -2,7 +2,7 @@
 import pytest
 
 from pagseguro import PagSeguro, PagSeguroTransactionSearchResult
-from pagseguro.configs import Config
+from pagseguro.config import Config
 from pagseguro.exceptions import PagSeguroValidationError
 from pagseguro.utils import is_valid_email, is_valid_cpf
 
@@ -173,3 +173,8 @@ def test_parse_xml(xml):
     assert result.results_in_page == 2
     assert result.total_pages == 1
     assert len(result.transactions) == 2
+
+
+def test_pagseguro_with_bad_config():
+    with pytest.raises(Exception):
+        PagSeguro(email=EMAIL, token=TOKEN, config=2)
