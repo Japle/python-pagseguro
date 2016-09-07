@@ -79,9 +79,8 @@ class PagSeguro(object):
                 params['shippingAddressState'] = self.shipping.get('state')
                 params['shippingAddressCountry'] = self.shipping.get('country',
                                                                      'BRA')
-                
-            if self.shipping.get('cost'):
-                params['shippingCost'] = self.shipping.get('cost')
+                if self.shipping.get('cost'):
+                    params['shippingCost'] = self.shipping.get('cost')
         else:
             params['shippingAddressRequired'] = False
 
