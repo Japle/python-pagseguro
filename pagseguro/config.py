@@ -45,7 +45,7 @@ class Config(dict):
                 payment_host, checkout_suffix),
             DATETIME_FORMAT='%Y-%m-%dT%H:%M:%S',
             REFERENCE_PREFIX='REF%s',
-            USE_SHIPPING=False,
+            USE_SHIPPING=True,
         )
 
         kwargs = {key.upper(): val for key, val in kwargs.items()}
