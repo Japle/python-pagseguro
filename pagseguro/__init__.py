@@ -65,22 +65,25 @@ class PagSeguro(object):
             params['senderBornDate'] = self.sender.get('born_date')
             params['senderHash'] = self.sender.get('hash')
 
-        if self.shipping:
-            params['shippingType'] = self.shipping.get('type')
-            params['shippingAddressStreet'] = self.shipping.get('street')
-            params['shippingAddressNumber'] = self.shipping.get('number')
-            params['shippingAddressComplement'] = self.shipping.get(
-                'complement')
-            params['shippingAddressDistrict'] = self.shipping.get('district')
-            params['shippingAddressPostalCode'] = self.shipping.get(
-                'postal_code')
-            params['shippingAddressCity'] = self.shipping.get('city')
-            params['shippingAddressState'] = self.shipping.get('state')
-            params['shippingAddressCountry'] = self.shipping.get('country',
-                                                                 'BRA')
-
-        if self.shipping and self.shipping.get('cost'):
-            params['shippingCost'] = self.shipping.get('cost')
+        if self.config.USE_SHIPPING:
+            if self.shipping:
+                params['shippingType'] = self.shipping.get('type')
+                params['shippingAddressStreet'] = self.shipping.get('street')
+                params['shippingAddressNumber'] = self.shipping.get('number')
+                params['shippingAddressComplement'] = self.shipping.get(
+                    'complement')
+                params['shippingAddressDistrict'] = self.shipping.get('district')
+                params['shippingAddressPostalCode'] = self.shipping.get(
+                    'postal_code')
+                params['shippingAddressCity'] = self.shipping.get('city')
+                params['shippingAddressState'] = self.shipping.get('state')
+                params['shippingAddressCountry'] = self.shipping.get('country',
+                                                                     'BRA')
+                
+            if self.shipping.get('cost'):
+                params['shippingCost'] = self.shipping.get('cost')
+        else:
+            params['shippingAddressRequired'] = False
 
         if self.extra_amount:
             params['extraAmount'] = self.extra_amount
