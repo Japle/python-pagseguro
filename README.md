@@ -69,7 +69,7 @@ O seu config também pode fazer override de algumas váriaveis pré-definidas na
 
 - CURRENCY - Moeda utilizada. Valor padrão: `'BRL'`
 - DATETIME_FORMAT - Formato de Data/Hora. Valor Padrão: `'%Y-%m-%dT%H:%M:%S'`
-- REFERENCE_PREFIX - Formato do valor de referência do produto. Valor Padrão: `'REF%s'` Obs: Nessecaso, sempre é necessário deixar o `%s` ao final do prefixo para que o mesmo seja preenchido automaticamente
+- REFERENCE_PREFIX - Formato do valor de referência do produto. Valor Padrão: `'REF%s'` Obs: Nesse caso, sempre é necessário deixar o `%s` ao final do prefixo para que o mesmo seja preenchido automaticamente
 - USE_SHIPPING - User endereço de entrega. Valor padrão: `True`
 
 
