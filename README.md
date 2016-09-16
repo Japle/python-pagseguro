@@ -56,26 +56,21 @@ pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO")
 
 ### Sandbox e Config Customizadas
 
-Ao instanciar um objecto `PagSeguro`, você poderá passar um parâmetro `config` contendo a class de configuração a ser usada pela classe. A lib implementa 2 classes, uma para ser usada em produção e outra em modo sandbox. Abaixo, um exemplo de como usar a lib em modo Sandbox.
+Ao instanciar um objecto `PagSeguro`, você poderá passar um parâmetro `config` contendo a class de configuração a ser usada pela classe. A variável `config` somente irá aceitar o tipo `dict`.
 
 ```python
-from pagseguro import PagSeguro, ConfigSandbox
+from pagseguro import PagSeguro
 
-pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO", config=ConfigSandbox())
+config = {'sandbox': True}
+pg = PagSeguro(email="seuemail@dominio.com", token="ABCDEFGHIJKLMNO", config=config)
 ```
 
-Caso queira criar sua própria classe de Config, crie uma class herdando de `AbstractConfig` e adicione as variáveis necessárias
+O seu config também pode fazer override de algumas váriaveis pré-definidas na classe de Config padrão. São elas:
 
-Ex:
-
-```python
-from pagseguro import AbstractConfig
-
-class MinhaClassConfig(AbstractConfig):
-	VAR1 = 'valor'
-	VAR2 = 'outro_valor'
-	...
-```
+- CURRENCY - Moeda utilizada. Valor padrão: `'BRL'`
+- DATETIME_FORMAT - Formato de Data/Hora. Valor Padrão: `'%Y-%m-%dT%H:%M:%S'`
+- REFERENCE_PREFIX - Formato do valor de referência do produto. Valor Padrão: `'REF%s'` Obs: Nessecaso, sempre é necessário deixar o `%s` ao final do prefixo para que o mesmo seja preenchido automaticamente
+- USE_SHIPPING - User endereço de entrega. Valor padrão: `True`
 
 
 ### Configurando os dados do comprador
