@@ -16,7 +16,7 @@ with open('requirements_dev.txt') as test_reqs:
 
 setup(
     name='pagseguro',
-    version='0.2.1',
+    version='0.3.0',
     description='Pagseguro API v2 wrapper',
     author='Bruno Rocha',
     author_email='rochacbruno@gmail.com',

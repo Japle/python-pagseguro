@@ -72,7 +72,8 @@ class PagSeguro(object):
                 params['shippingAddressNumber'] = self.shipping.get('number')
                 params['shippingAddressComplement'] = self.shipping.get(
                     'complement')
-                params['shippingAddressDistrict'] = self.shipping.get('district')
+                params['shippingAddressDistrict'] = self.shipping.get(
+                    'district')
                 params['shippingAddressPostalCode'] = self.shipping.get(
                     'postal_code')
                 params['shippingAddressCity'] = self.shipping.get('city')
