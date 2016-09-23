@@ -10,13 +10,10 @@ readme = open('README.md').read()
 with open('requirements.txt') as reqs:
     requirements = reqs.read().split()
 
-with open('requirements_dev.txt') as test_reqs:
-    test_requirements = test_reqs.read().split()
-
 
 setup(
     name='pagseguro',
-    version='0.3.0',
+    version='0.3.1',
     description='Pagseguro API v2 wrapper',
     author='Bruno Rocha',
     author_email='rochacbruno@gmail.com',
@@ -27,7 +24,6 @@ setup(
     install_requires=requirements,
     license='MIT',
     test_suite='tests',
-    tests_require=test_requirements,
     zip_safe=False,
     classifiers=[
         'Development Status :: 3 - Alpha',
