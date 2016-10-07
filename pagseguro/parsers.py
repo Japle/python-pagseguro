@@ -2,6 +2,7 @@
 import logging
 
 from .utils import parse_date
+from .config import Config
 
 import xmltodict
 
@@ -12,7 +13,9 @@ class XMLParser(object):
     def __init__(self, xml, config=None):
         self.xml = xml
         self.errors = None
-        self.config = config or {}
+        if config is None:
+            config = Config()
+        self.config = config
         self.parse_xml(xml)
         logger.debug(self.__dict__)
 
