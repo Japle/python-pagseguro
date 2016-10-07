@@ -88,7 +88,7 @@ class PagSeguroCheckoutSession(XMLParser):
 class PagSeguroPreApprovalPayment(XMLParser):
     def __init__(self, xml, config=None):
         self.code = None
-        super(PagSeguroPreApprovalPayment, self).__init__(xml)
+        super(PagSeguroPreApprovalPayment, self).__init__(xml, config)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroPreApprovalPayment, self).parse_xml(xml)
@@ -106,7 +106,7 @@ class PagSeguroCheckoutResponse(XMLParser):
         self.payment_url = None
         self.payment_link = None
         self.transaction = None
-        super(PagSeguroCheckoutResponse, self).__init__(xml)
+        super(PagSeguroCheckoutResponse, self).__init__(xml, config)
 
     def parse_xml(self, xml):
         parsed = super(PagSeguroCheckoutResponse, self).parse_xml(xml)
