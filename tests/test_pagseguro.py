@@ -133,7 +133,6 @@ def test_clean_none_params(sender):
     sender_copy['born_date'] = None
     pagseguro.sender = sender_copy
     pagseguro.build_checkout_params()
-
     assert 'senderCPF' not in pagseguro.data
     assert 'senderBornData' not in pagseguro.data
 
