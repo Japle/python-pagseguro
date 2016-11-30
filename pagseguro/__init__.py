@@ -183,10 +183,8 @@ class PagSeguro(object):
         self.clean_none_params()
 
     def clean_none_params(self):
-        copy = dict(self.data)
-        for k, v in list(copy.items()):
-            if not v:
-                del self.data[k]
+        self.data = \
+            {k: v for k, v in self.data.items() if v or isinstance(v, bool)}
 
     @property
     def reference_prefix(self):
