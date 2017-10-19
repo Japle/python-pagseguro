@@ -1,4 +1,5 @@
 python-pagseguro
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 ================
 [![Build
 Status](https://travis-ci.org/rochacbruno/python-pagseguro.png)](https://travis-ci.org/rochacbruno/python-pagseguro)
@@ -259,3 +260,14 @@ by @shyba
 ## Exemplo em web2py
 
 
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars1.githubusercontent.com/u/1661112?v=4" width="100px;"/><br /><sub>Patrick Mazulo</sub>](http://blog.dunderlabs.com)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=mazulo "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=mazulo "Documentation") |
+| :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!

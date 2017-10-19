@@ -1,0 +1,21 @@
+{
+  "projectName": "python-pagseguro",
+  "projectOwner": "rochacbruno",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "mazulo",
+      "name": "Patrick Mazulo",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1661112?v=4",
+      "profile": "http://blog.dunderlabs.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ]
+}
