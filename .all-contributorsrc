@@ -26,6 +26,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "ellisonleao",
+      "name": "Ellison Leão",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/178641?v=4",
+      "profile": "http://ellison.rocks",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }
