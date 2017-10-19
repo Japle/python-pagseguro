@@ -16,6 +16,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "mauler",
+      "name": "mauler",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/234982?v=4",
+      "profile": "http://mauler.github.io",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }
