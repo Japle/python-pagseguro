@@ -109,7 +109,7 @@ O **type** pode ser pg.SEDEX, pg.PAC, pg.NONE
 | ------ | --------- | ---- |
 | 1 | PAC | pg.PAC |
 | 2 | SEDEX | pg.SEDEX |
-| 3 | Nao especificado | pg.None |
+| 3 | Nao especificado | pg.NONE |
 
 Valores opcionais para **shipping**
 - "cost": "123456.26"
