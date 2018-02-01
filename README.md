@@ -6,6 +6,7 @@ Status](https://travis-ci.org/rochacbruno/python-pagseguro.png)](https://travis-
 [![Coverage
 Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](https://coveralls.io/r/rochacbruno/python-pagseguro)
 [![Code Health](https://landscape.io/github/rochacbruno/python-pagseguro/master/landscape.svg)](https://landscape.io/github/rochacbruno/python-pagseguro/master)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/python-pagseguro/Lobby)
 
 <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=rochacbruno%40gmail%2ecom&amp;lc=BR&amp;item_name=pythonpagseguro&amp;no_note=0&amp;currency_code=BRL&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest"><img alt='Donate with Paypal' src='http://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif' /></a>
 
