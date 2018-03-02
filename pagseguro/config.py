@@ -48,8 +48,8 @@ class Config(dict):
             USE_SHIPPING=True,
         )
 
-        kwargs = {key.upper(): val for key, val in kwargs.items()}
-        keys = defaults.keys()
+        kwargs = {key.upper(): val for key, val in list(kwargs.items())}
+        keys = list(defaults.keys())
         for key in keys:
             # only add override keys to properties
             value = kwargs.pop(key, defaults[key])

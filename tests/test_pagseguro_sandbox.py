@@ -110,7 +110,7 @@ def test_build_checkout_params_with_all_params(pagseguro_sandbox, sender,
         assert key in pagseguro_sandbox.data
 
     for i, key in enumerate(pagseguro_sandbox.items, 1):
-        keys_to_compare = map(lambda x: x.format(i), item_keys)
+        keys_to_compare = [x.format(i) for x in item_keys]
         for item_key in keys_to_compare:
             assert item_key in pagseguro_sandbox.data
 

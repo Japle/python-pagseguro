@@ -109,7 +109,7 @@ def test_build_checkout_params_with_all_params(pagseguro, sender, shipping,
         assert key in pagseguro.data
 
     for i, key in enumerate(pagseguro.items, 1):
-        keys_to_compare = map(lambda x: x.format(i), item_keys)
+        keys_to_compare = [x.format(i) for x in item_keys]
         for item_key in keys_to_compare:
             assert item_key in pagseguro.data
 
@@ -123,7 +123,7 @@ def test_add_items_util(items):
 
 def test_reference(pagseguro):
     pagseguro.reference = '12345'
-    assert unicode(pagseguro.reference) == u'REF12345'
+    assert pagseguro.reference == u'REF12345'
 
 
 def test_clean_none_params(sender):

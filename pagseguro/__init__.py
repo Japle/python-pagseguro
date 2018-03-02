@@ -184,7 +184,7 @@ class PagSeguro(object):
 
     def clean_none_params(self):
         self.data = \
-            {k: v for k, v in self.data.items() if v or isinstance(v, bool)}
+            {k: v for k, v in list(self.data.items()) if v or isinstance(v, bool)}
 
     @property
     def reference_prefix(self):
