@@ -1,11 +1,13 @@
 #!/usr/bin/env python
+import codecs
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-readme = open('README.md').read()
+with codecs.open('README.md', encoding='utf-8') as readme_fd:
+    readme = readme_fd.read()
 
 with open('requirements.txt') as reqs:
     requirements = reqs.read().split()
