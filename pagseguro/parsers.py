@@ -41,7 +41,7 @@ class PagSeguroNotificationResponse(XMLParser):
         if self.errors:
             return
         transaction = parsed.get('transaction', {})
-        for k, v in transaction.items():
+        for k, v in list(transaction.items()):
             setattr(self, k, v)
 
 
@@ -55,7 +55,7 @@ class PagSeguroPreApprovalNotificationResponse(XMLParser):
         if self.errors:
             return
         transaction = parsed.get('transaction', {})
-        for k, v in transaction.items():
+        for k, v in list(transaction.items()):
             setattr(self, k, v)
 
 
@@ -68,7 +68,7 @@ class PagSeguroPreApprovalCancel(XMLParser):
         if self.errors:
             return
         transaction = parsed.get('transaction', {})
-        for k, v in transaction.items():
+        for k, v in list(transaction.items()):
             setattr(self, k, v)
 
 

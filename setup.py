@@ -1,13 +1,15 @@
 #!/usr/bin/env python
+import io
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-readme = open('README.md').read()
+with io.open('README.md', encoding='utf-8') as readme_fd:
+    readme = readme_fd.read()
 
-with open('requirements.txt') as reqs:
+with io.open('requirements.txt') as reqs:
     requirements = reqs.read().split()
 
 
@@ -37,6 +39,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.5',
     ],
     keywords='pagseguro, payment, payments, credit-card'
 )
