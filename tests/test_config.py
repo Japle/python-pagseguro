@@ -35,7 +35,7 @@ def common_config():
 def test_common_config(common_config):
     c = Config()
     for key, val in common_config.items():
-        print key, val
+        print(key, val)
         assert getattr(c, key) == common_config[key]
 
 
