@@ -39,9 +39,8 @@ class Cart(object):
             if operation == 'add':
                 self.items.append(product)
             elif operation == 'remove':
-                cart_product = [x for x in self.items\
-                                    if x['id'] == product['id']]
-                self.items.remove(cart_product[0])
+                cart_p = [x for x in self.items if x['id'] == product['id']]
+                self.items.remove(cart_p[0])
             self.update()
             return True
         else:
