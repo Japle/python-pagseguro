@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
-from flask_seguro import app
-from flask_seguro.cart import Cart
-from flask_seguro.products import Products
 from flask import session
 from flask import jsonify
 from flask import request
 from flask import redirect
 from flask import render_template
+from flask import current_app
+
+from .views import main
+from flask_seguro.cart import Cart
 from pagseguro import PagSeguro
+from flask_seguro.products import Products
 
-
-@app.before_request
+@main.before_request
 def before_request():
     if 'cart' not in session:
         session['cart'] = Cart().to_dict()
 
 
-@app.route('/')
+@main.route('/')
 def index():
     return list_products()
 
 
-@app.route('/cart')
+@main.route('/cart')
 def cart():
     return render_template('cart.jinja2', cart=session['cart'])
 
 
-@app.route('/products/list')
+@main.route('/products/list')
 def list_products():
     products = Products().get_all()
     return render_template('products.jinja2',
@@ -34,7 +35,7 @@ def list_products():
                            cart=session['cart'])
 
 
-@app.route('/cart/add/<item_id>')
+@main.route('/cart/add/<item_id>')
 def add_to_cart(item_id):
     cart = Cart(session['cart'])
     if cart.change_item(item_id, 'add'):
@@ -42,7 +43,7 @@ def add_to_cart(item_id):
     return list_products()
 
 
-@app.route('/cart/remove/<item_id>')
+@main.route('/cart/remove/<item_id>')
 def remove_from_cart(item_id):
     cart = Cart(session['cart'])
     if cart.change_item(item_id, 'remove'):
@@ -50,20 +51,20 @@ def remove_from_cart(item_id):
     return list_products()
 
 
-@app.route('/notification')
+@main.route('/notification')
 def notification_view(request):
     notification_code = request.POST['notificationCode']
-    pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
+    pg = PagSeguro(email=current_app.config['EMAIL'], token=current_app.config['TOKEN'])
     pg.check_notification(notification_code)
     # use the return of the function above to update the order
 
 
-@app.route('/checkout', methods=['GET'])
+@main.route('/checkout', methods=['GET'])
 def checkout_get():
     return render_template('checkout.jinja2')
 
 
-@app.route('/checkout', methods=['POST'])
+@main.route('/checkout', methods=['POST'])
 def checkout_post():
     for field in ['name', 'email', 'street', 'number', 'complement',
                   'district', 'postal_code', 'city', 'state']:
@@ -92,14 +93,14 @@ def checkout_post():
 
 
 def checkout_pg(sender, shipping, cart):
-    pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
+    pg = PagSeguro(email=current_app.config['EMAIL'], token=current_app.config['TOKEN'])
     pg.sender = sender
     shipping['type'] = pg.SEDEX
     pg.shipping = shipping
-    pg.extra_amount = "%.2f" % float(app.config['EXTRA_AMOUNT'])
-    pg.redirect_url = app.config['REDIRECT_URL']
-    pg.notification_url = app.config['NOTIFICATION_URL']
+    pg.extra_amount = "%.2f" % float(current_app.config['EXTRA_AMOUNT'])
+    pg.redirect_url = current_app.config['REDIRECT_URL']
+    pg.notification_url = current_app.config['NOTIFICATION_URL']
     pg.items = cart.items
     for item in cart.items:
-        item['amount'] = "%.2f" % float(app.config['EXTRA_AMOUNT'])
+        item['amount'] = "%.2f" % float(current_app.config['EXTRA_AMOUNT'])
     return pg
