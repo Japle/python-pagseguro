@@ -29,8 +29,7 @@ class Cart:
             if operation == 'add':
                 self.items.append(product)
             elif operation == 'remove':
-                cart_product = filter(
-                    lambda x: x['id'] == product['id'], self.items)
+                cart_product = [x for x in self.items if x['id'] == product['id']]
                 self.items.remove(cart_product[0])
             self.update()
             return True
