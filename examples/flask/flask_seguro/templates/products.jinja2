@@ -7,10 +7,10 @@
         {{product.description}}<br/>
         R${{product.price}}<br/>
         {% if product not in cart['items'] %}
-        <a type="button" class="btn btn-primary btn-xs" href="{{ url_for('add_to_cart', item_id=product.id) }}">
+        <a type="button" class="btn btn-primary btn-xs" href="{{ url_for('main.add_to_cart', item_id=product.id) }}">
             <span class="glyphicon glyphicon-plus-sign"></span>
         {% else %}
-        <a type="button" class="btn btn-primary btn-xs" href="{{ url_for('remove_from_cart', item_id=product.id) }}">
+        <a type="button" class="btn btn-primary btn-xs" href="{{ url_for('main.remove_from_cart', item_id=product.id) }}">
             <span class="glyphicon glyphicon-minus-sign"></span>
         {% endif %}
             <span class="glyphicon glyphicon-shopping-cart"></span>
