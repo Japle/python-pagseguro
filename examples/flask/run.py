@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-from flask_seguro import app
+from flask_seguro import create_app
 import os
 
-if __name__ == "__main__":
-    config_file = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
-    app.config.from_pyfile(config_file)
-    app.run()
+app = create_app(os.environ.get('CONFIG_APP_DEFAULT') or 'development')
+
+@app.shell_context_processor
+def make_shell_context():
+    return dict(app=app)
