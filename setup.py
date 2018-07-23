@@ -13,7 +13,7 @@ with open('requirements.txt') as reqs:
 
 setup(
     name='pagseguro',
-    version='0.3.3',
+    version='0.3.4',
     description='Pagseguro API v2 wrapper',
     author='Bruno Rocha',
     author_email='rochacbruno@gmail.com',
@@ -22,6 +22,8 @@ setup(
     package_dir={'pagseguro': 'pagseguro'},
     include_package_data=True,
     install_requires=requirements,
+    long_description=readme,
+    long_description_content_type='text/markdown',
     license='MIT',
     test_suite='tests',
     zip_safe=False,
