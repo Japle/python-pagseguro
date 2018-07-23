@@ -1,4 +1,3 @@
-
 from flask_seguro import create_app
 
 app = create_app('development')

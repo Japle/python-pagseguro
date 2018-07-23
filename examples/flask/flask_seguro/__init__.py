@@ -1,7 +1,7 @@
 """ Application Skeleton """
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from config import config
+from config import CONFIG
 
 BOOTSTRAP = Bootstrap()
 
@@ -9,7 +9,7 @@ BOOTSTRAP = Bootstrap()
 def create_app(config_name):
     """ Factory Function """
     app = Flask(__name__)
-    app.config.from_object(config[config_name])
+    app.config.from_object(CONFIG[config_name])
 
     BOOTSTRAP.init_app(app)
 

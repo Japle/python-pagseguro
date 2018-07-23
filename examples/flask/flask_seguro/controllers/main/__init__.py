@@ -5,12 +5,13 @@ from flask import jsonify
 from flask import request
 from flask import redirect
 from flask import render_template
-from flask import current_app
+from flask import current_app as app
 
 from pagseguro import PagSeguro
 from flask_seguro.products import Products
 from flask_seguro.cart import Cart
 from .views import main
+
 
 @main.before_request
 def before_request():
@@ -59,8 +60,8 @@ def remove_from_cart(item_id):
 @main.route('/notification')
 def notification_view(request):
     notification_code = request.POST['notificationCode']
-    pagseguro = PagSeguro(email=current_app.config['EMAIL'], token=current_app.config['TOKEN'])
-    pagseguro.check_notification(notification_code)
+    pg = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
+    pg.check_notification(notification_code)
     # use the return of the function above to update the order
 
 
@@ -98,14 +99,14 @@ def checkout_post():
 
 
 def checkout_pg(sender, shipping, cart):
-    pagseguro = PagSeguro(email=current_app.config['EMAIL'], token=current_app.config['TOKEN'])
+    pagseguro = PagSeguro(email=app.config['EMAIL'], token=app.config['TOKEN'])
     pagseguro.sender = sender
     shipping['type'] = pagseguro.SEDEX
     pagseguro.shipping = shipping
-    pagseguro.extra_amount = "%.2f" % float(current_app.config['EXTRA_AMOUNT'])
-    pagseguro.redirect_url = current_app.config['REDIRECT_URL']
-    pagseguro.notification_url = current_app.config['NOTIFICATION_URL']
+    pagseguro.extra_amount = "%.2f" % float(app.config['EXTRA_AMOUNT'])
+    pagseguro.redirect_url = app.config['REDIRECT_URL']
+    pagseguro.notification_url = app.config['NOTIFICATION_URL']
     pagseguro.items = cart.items
     for item in cart.items:
-        item['amount'] = "%.2f" % float(current_app.config['EXTRA_AMOUNT'])
+        item['amount'] = "%.2f" % float(app.config['EXTRA_AMOUNT'])
     return pagseguro
