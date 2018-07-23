@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from flask_seguro import create_app
 import unittest
 import tempfile
 import flask
 from flask import json
+
 from flask_seguro.products import Products
+from flask_seguro import create_app
 
 
 class FlasKSeguroTestCase(unittest.TestCase):
