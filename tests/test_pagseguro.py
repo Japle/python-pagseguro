@@ -123,7 +123,7 @@ def test_add_items_util(items):
 
 def test_reference(pagseguro):
     pagseguro.reference = '12345'
-    assert unicode(pagseguro.reference) == u'REF12345'
+    assert str(pagseguro.reference) == u'REF12345'
 
 
 def test_clean_none_params(sender):
