@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-import flask_seguro
 import unittest
 import tempfile
 import flask
 from flask import json
+
 from flask_seguro.products import Products
+from flask_seguro import create_app
 
 
 class FlasKSeguroTestCase(unittest.TestCase):
     def setUp(self):
-        self.db_fd, flask_seguro.app.config['DATABASE'] = tempfile.mkstemp()
-        config_file = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), 'settings.cfg')
-        flask_seguro.app.config.from_pyfile(config_file)
-        flask_seguro.app.config['TESTING'] = True
-        self.app = flask_seguro.app.test_client()
+        self._current_app = create_app('development')
+
+        self.db_fd, self._current_app.config['DATABASE'] = tempfile.mkstemp()
+        self._current_app.config['TESTING'] = True
+        self.app = self._current_app.test_client()
         # flaskr.init_db()
 
     def tearDown(self):
         os.close(self.db_fd)
-        os.unlink(flask_seguro.app.config['DATABASE'])
+        os.unlink(self._current_app.config['DATABASE'])
 
     def list_products(self):
         return Products().get_all()
@@ -34,7 +34,7 @@ class FlasKSeguroTestCase(unittest.TestCase):
         return cart
 
     def test_retrieve_cart_and_add_remove_item(self):
-        with flask_seguro.app.test_client() as c:
+        with self._current_app.test_client() as c:
             response = c.get('/')
             session = flask.session
             self.assertIn('cart', session)
@@ -61,7 +61,7 @@ class FlasKSeguroTestCase(unittest.TestCase):
         return response
 
     def test_checkout(self):
-        with flask_seguro.app.test_client() as c:
+        with self._current_app.test_client() as c:
             response = c.get('/')
             session = flask.session
 

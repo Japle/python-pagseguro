@@ -1,32 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-{% block head %}
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FlaskSeguro - {% block title %}{% endblock %}</title>
-<!-- Bootstrap's CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css') }}">
-<!-- Bootstrap's Theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-{% endblock %}
-</head>
-<body>
-  {% include 'menu.jinja2' %}
-    <div class="container">
-      <div class="row products">
-        <h1>{{ self.title() }}</h1>
-        {% block content %}{% endblock %}
-      </div>
+{% extends 'bootstrap/base.html' %}
 
+{% block styles %}
+  {{super()}}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css') }}">
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block navbar %}
+  {% include 'menu.jinja2' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row products">
+            <h1>{{ self.title() }}</h1>
+            {% block subcontent %}{% endblock %}
+        </div>
     </div>
-<!-- jQuery's JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<!-- Bootstrap's JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<!-- FlaskSeguro's JavaScript -->
-<script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
-</html>
+{% endblock %}

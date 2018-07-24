@@ -1,43 +1,45 @@
 {% extends 'base.jinja2' %}
+
 {% block title %}Pagamento{% endblock %}
-{% block content %}
-<form class="form-horizonal" role="form" method="POST">
-  <div class="form-group">
-    <label for="InputEmail">Email</label>
-    <input type="email" class="form-control" id="InputEmail" placeholder="Email" name="email">
-  </div>
-  <div class="form-group">
-    <label for="InputName">Nome</label>
-    <input type="text" class="form-control" id="InputName" placeholder="Nome" name="name">
-  </div>
-  <div class="form-group">
-    <label for="InputStreet">Rua</label>
-    <input type="text" class="form-control" id="InputStreet" placeholder="Rua" name="street">
-  </div>
-  <div class="form-group">
-    <label for="InputNumber">Número</label>
-    <input type="number" class="form-control" id="InputNumber" placeholder="Número" name="number">
-  </div>
-  <div class="form-group">
-    <label for="InputComplement">Complemento</label>
-    <input type="text" class="form-control" id="InputComplement" placeholder="Complemento" name="complement">
-  </div>
-  <div class="form-group">
-    <label for="InputDistrict">Bairro</label>
-    <input type="text" class="form-control" id="InputDistrict" placeholder="Bairro" name="district">
-  </div>
-  <div class="form-group">
-    <label for="InputPostalCode">CEP</label>
-    <input type="text" class="form-control" id="InputPostalCode" placeholder="CEP" name="postal_code">
-  </div>
-  <div class="form-group">
-    <label for="InputCity">Cidade</label>
-    <input type="text" class="form-control" id="InputCity" placeholder="Cidade" name="city">
-  </div>
-  <div class="form-group">
-    <label for="InputState">Estado</label>
-    <input type="text" class="form-control" id="InputState" placeholder="Estado" name="state">
-  </div>
-  <button type="submit" class="btn btn-default">Pagar</button>
-</form>
+
+{% block subcontent %}
+    <form class="form-horizonal" role="form" method="POST">
+        <div class="form-group">
+            <label for="InputEmail">Email</label>
+            <input type="email" class="form-control" id="InputEmail" placeholder="Email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="InputName">Nome</label>
+            <input type="text" class="form-control" id="InputName" placeholder="Nome" name="name">
+        </div>
+        <div class="form-group">
+            <label for="InputStreet">Rua</label>
+            <input type="text" class="form-control" id="InputStreet" placeholder="Rua" name="street">
+        </div>
+        <div class="form-group">
+            <label for="InputNumber">Número</label>
+            <input type="number" class="form-control" id="InputNumber" placeholder="Número" name="number">
+        </div>
+        <div class="form-group">
+            <label for="InputComplement">Complemento</label>
+            <input type="text" class="form-control" id="InputComplement" placeholder="Complemento" name="complement">
+        </div>
+        <div class="form-group">
+            <label for="InputDistrict">Bairro</label>
+            <input type="text" class="form-control" id="InputDistrict" placeholder="Bairro" name="district">
+        </div>
+        <div class="form-group">
+            <label for="InputPostalCode">CEP</label>
+            <input type="text" class="form-control" id="InputPostalCode" placeholder="CEP" name="postal_code">
+        </div>
+        <div class="form-group">
+            <label for="InputCity">Cidade</label>
+            <input type="text" class="form-control" id="InputCity" placeholder="Cidade" name="city">
+        </div>
+        <div class="form-group">
+            <label for="InputState">Estado</label>
+            <input type="text" class="form-control" id="InputState" placeholder="Estado" name="state">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary">Pagar</button>
+    </form>
 {% endblock %}
