@@ -12,6 +12,13 @@ Status](https://coveralls.io/repos/rochacbruno/python-pagseguro/badge.png)](http
 
 Integração com a API v2 de pagamentos e notificações do Pagseguro utilizando requests.
 
+Contribuidores
+==============
+
+[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/0)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/0)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/1)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/1)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/2)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/2)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/3)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/3)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/4)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/4)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/5)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/5)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/6)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/6)[![](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/images/7)](https://sourcerer.io/fame/rochacbruno/rochacbruno/python-pagseguro/links/7)
+
+Faça parte! mande um Pull Request!
+
 Instalando
 ==========================
 ```bash
@@ -251,24 +258,11 @@ A lista completa de valores pode ser conferida em  https://pagseguro.uol.com.br/
 ## Quokka CMS
 [Quokka Cart PagSeguro Processor](https://github.com/pythonhub/quokka-cart/blob/master/processors/pagseguro_processor.py)
 
-## Exemplo em Django
-
 ## Exemplo em Flask
 
 [FlaskSeguro](https://github.com/rochacbruno/python-pagseguro/tree/master/examples/flask)
 by @shyba
 
-## Exemplo em web2py
 
 
 
-## Mantenedores
-
-Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/1661112?v=4" width="100px;"/><br /><sub>Patrick Mazulo</sub>](http://blog.dunderlabs.com)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=mazulo "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=mazulo "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/234982?v=4" width="100px;"/><br /><sub>mauler</sub>](http://mauler.github.io)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=mauler "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=mauler "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/178641?v=4" width="100px;"/><br /><sub>Ellison Leão</sub>](http://ellison.rocks)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=ellisonleao "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=ellisonleao "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/13952931?v=4" width="100px;"/><br /><sub>Augusto Goulart</sub>](https://augustogoulart.me/)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=augustogoulart "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=augustogoulart "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/458654?v=4" width="100px;"/><br /><sub>Bruno Rocha</sub>](http://brunorocha.org)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=rochacbruno "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=rochacbruno "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/153288?v=4" width="100px;"/><br /><sub>Guto Maia</sub>](http://gutomaia.net)<br />[💻](https://github.com/rochacbruno/python-pagseguro/commits?author=gutomaia "Code") [📖](https://github.com/rochacbruno/python-pagseguro/commits?author=gutomaia "Documentation") |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
