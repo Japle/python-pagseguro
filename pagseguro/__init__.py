@@ -83,7 +83,7 @@ class PagSeguro(object):
                 if self.shipping.get('cost'):
                     params['shippingCost'] = self.shipping.get('cost')
         else:
-            params['shippingAddressRequired'] = False
+            params['shippingAddressRequired'] = 'false'
 
         if self.extra_amount:
             params['extraAmount'] = self.extra_amount
