@@ -45,6 +45,7 @@ SECRET_KEY = "s3cr3t"
 ```
 
 Caso as alterações não sejam feitas, o PagSeguro te notificará de erro retornando a seguinte mensagem _Código de checkout inválido_:
+
 ![](https://raw.githubusercontent.com/JacksonOsvaldo/python-pagseguro/master/examples/flask/screenshots/screen4.png)
 
 
