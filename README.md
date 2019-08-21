@@ -1,3 +1,5 @@
+> **Este projeto agora é mantido pelo @PagSeguro, o repositório foi transferido para o user @Japle que é o responsável pelas libs e integrações no PagSeguro**. -- @rochacbruno
+
 python-pagseguro
 ================
 [![Build
