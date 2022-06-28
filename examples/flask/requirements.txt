@@ -1,4 +1,4 @@
-arrow==0.12.1
+arrow==0.15.1
 astroid==2.0.1
 atomicwrites==1.1.5
 attrs==18.1.0
